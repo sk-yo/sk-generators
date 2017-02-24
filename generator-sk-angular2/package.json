@@ -1,0 +1,23 @@
+{
+  "name": "generator-sk-angular2",
+  "version": "0.0.1",
+  "description": "Gerador SK de artefatos Angular 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "sk"
+  ],
+  "author": "jcruz",
+  "license": "ISC",
+  "files": [
+    "generators"
+  ],
+  "dependencies": {
+    "@angular-cli/ast-tools": "^1.0.16",
+    "sk-node-api": "0.0.2",
+    "yeoman-generator": "^1.0.0"
+  }
+}
