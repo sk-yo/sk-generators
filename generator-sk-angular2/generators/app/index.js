@@ -43,8 +43,8 @@ module.exports = class extends Generator {
 
         //copy protactor.conf.js
         this.fs.copy(
-            this.templatePath('protactor.conf.js'),
-            this.destinationPath('protactor.conf.js')
+            this.templatePath('protractor.conf.js'),
+            this.destinationPath('protractor.conf.js')
         );
 
         //copy tslint.json
