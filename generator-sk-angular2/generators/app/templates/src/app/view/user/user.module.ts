@@ -1,20 +1,15 @@
-import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
-
-import { AppComponent } from './app.component';
 import { CovalentCoreModule, CovalentLayoutModule } from '@covalent/core';
-import { MngtModule } from './view/mngt/mngt.module';
-import { SysModule } from './view/sys/sys.module';
-import { UserModule } from './view/user/user.module';
-
+import { UserDashboardComponent } from './@dashboard/user-dashboard.component';
+import { UserRoutingModule } from './user-routing.module.';
 
 @NgModule({
   declarations: [
-    AppComponent
+    UserDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -23,11 +18,14 @@ import { UserModule } from './view/user/user.module';
     MaterialModule.forRoot(),
     CovalentCoreModule.forRoot(),
     CovalentLayoutModule.forRoot(),
-    MngtModule.forRoot(),
-    SysModule.forRoot(),
-    UserModule.forRoot()
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    UserRoutingModule
+  ]
 })
-export class AppModule { }
+export class UserModule {
+   static forRoot() : ModuleWithProviders {
+    return {
+      ngModule: UserModule,
+      providers: []
+    }
+  }
+ }
