@@ -7,7 +7,7 @@ module.exports = class extends Generator {
     constructor(args, opts) {
         super(args, opts);
         // Argumento opcional com o nome da aplicação.
-        this.argument('appname', {type: String});
+        this.argument('appname', {type: String, desc: 'Nome da aplicação.'});
     }
 
     writing() {
