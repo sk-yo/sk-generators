@@ -49,7 +49,7 @@ module.exports = class extends Generator {
         this.fs.copy(this.templatePath('src/typings.d.ts'), this.destinationPath('src/typings.d.ts'));
 
         //copy .gitignore
-        this.fs.copy(this.templatePath('.gitignore'), this.destinationPath('.gitignore'));
+        this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
 
         //copy angular-cli.json
          this.fs.copyTpl(this.templatePath('angular-cli.json'),this.destinationPath('angular-cli.json'),
