@@ -13,26 +13,6 @@ module.exports = class extends Generator {
 
     }
 
-    prompting() {
-        /*
-        return this.prompt([{
-            type: 'input',
-            name: 'packageJava',
-            message: 'Digite o nome do pacote java',
-            default: `br.jus.tre_pa.${dotCase(this.options.appname)}`,
-            validate: function(answers) {
-                let packageJavaPattern = /^([a-zA-Z_]{1}[a-zA-Z]*){2,10}\.([a-zA-Z_]{1}[a-zA-Z0-9_]*){1,30}((\.([a-zA-Z_]{1}[a-zA-Z0-9_]*){1,61})*)?$/;
-                if(packageJavaPattern.test(answers.packageJava)) {
-                    return true;
-                }
-                return 'Nome de pacote java inválido.'
-            }
-        }]).then((answers) => {
-            this.answers = answers;
-        });
-        */
-    }
-
     writing() {
         
         mkdirp(this.options.appname);
