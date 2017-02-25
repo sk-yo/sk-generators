@@ -10,7 +10,6 @@ const chalk = require('chalk');
 module.exports = class extends Generator {
     constructor(args, opts) {
         super(args, opts);
-
     }
 
     initializing() {
@@ -22,7 +21,6 @@ module.exports = class extends Generator {
     }
 
     prompting() {
-
         var questions = [
             {
                 type: 'list',
@@ -35,11 +33,11 @@ module.exports = class extends Generator {
         return this.prompt(questions).then((answers) => {
             this.answers = answers;
         });
-
     }
 
     writing() {
         //this.log(sk.findClassesNamesByAnnotationName('javax.persistence.Entity'));
-        this.log(this.answers);
+        //this.log(this.answers);
+        this.log('\tcreate src');
     }
 }
