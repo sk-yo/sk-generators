@@ -10,12 +10,14 @@ module.exports = class extends Generator {
     constructor(args, opts) {
         super(args, opts);
         // Argumento opcional com o nome da aplicação.
-        this.argument('appname', {type: String, desc: 'Nome da aplicação.'});
+        this.argument('appname', { type: String, desc: 'Nome da aplicação.' });
+        this.option('keycloak');
+        this.option('jpa');
 
     }
 
     writing() {
-        
+
         let groupId = `br.jus.tre_pa.${dotCase(this.options.appname)}`;
         let packageName = groupId;
         let packageDir = _.split(groupId, '.').join('/');
@@ -29,6 +31,9 @@ module.exports = class extends Generator {
         mkdirp(`src/main/java/${packageDir}/domain`);
         this.log(`${chalk.green('   create')} src/main/java/${packageDir}/domain`);
 
+        mkdirp(`src/main/java/${packageDir}/exception`);
+        this.log(`${chalk.green('   create')} src/main/java/${packageDir}/exception`);
+
         mkdirp(`src/main/java/${packageDir}/repository`);
         this.log(`${chalk.green('   create')} src/main/java/${packageDir}/repository`);
 
@@ -38,6 +43,10 @@ module.exports = class extends Generator {
         mkdirp(`src/main/java/${packageDir}/rest`);
         this.log(`${chalk.green('   create')} src/main/java/${packageDir}/rest`);
 
+        this.fs.copyTpl(this.templatePath('src/main/resources/application**'), this.destinationPath('src/main/resources/'),
+            {  appname: this.options.appname, keycloak: this.options.keycloak, jpa: this.options.jpa }
+        );
+
         mkdirp(`src/main/test/${packageDir}/service`);
         this.log(`${chalk.green('   create')} src/main/test/${packageDir}/service`);
 
@@ -45,14 +54,14 @@ module.exports = class extends Generator {
         this.log(`${chalk.green('   create')} src/main/test/${packageDir}/rest`);
 
         this.fs.copyTpl(this.templatePath('pom.xml'), this.destinationPath('pom.xml'),
-            { appname : this.options.appname, groupId: groupId }
+            { appname: this.options.appname, groupId: groupId, keycloak: this.options.keycloak, jpa: this.options.jpa }
         );
 
         this.fs.copy(this.templatePath('mvnw'), this.destinationPath('mvnw'));
         this.fs.copy(this.templatePath('mvnw.cmd'), this.destinationPath('mvnw.cmd'));
 
         this.fs.copyTpl(this.templatePath('src/main/java/Application.java'), this.destinationPath(`src/main/java/${packageDir}/${appClassName}Application.java`),
-            { appname : this.options.appname, groupId: groupId, appClassName: appClassName, packageName: packageName }
+            { appname: this.options.appname, groupId: groupId, appClassName: appClassName, packageName: packageName }
         );
     }
 }
