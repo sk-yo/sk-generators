@@ -36,8 +36,14 @@ module.exports = class extends Generator {
     }
 
     writing() {
-        //this.log(sk.findClassesNamesByAnnotationName('javax.persistence.Entity'));
-        //this.log(this.answers);
-        this.log('\tcreate src');
+
+        let domainClass = sk.findClassByName(this.answers.domainClass);
+        let domainClassId = sk.findAttributeWithAnnotationName(domainClass.attributes, 'javax.persistence.Id');
+
+        this.fs.copyTpl(this.templatePath('Repository.java'), 
+            this.destinationPath(`src/main/java/${domainClass.classPackage.classParentPackageDirectory}/repository/${domainClass.name}Repository.java`),
+            {domainClass: domainClass});
+        //this.log(domainClass);
+        
     }
 }
