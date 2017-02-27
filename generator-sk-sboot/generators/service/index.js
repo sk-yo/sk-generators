@@ -49,8 +49,8 @@ module.exports = class extends Generator {
 
         let domainClassId = sk.findAttributeWithAnnotationName(this.domainClass.attributes, 'javax.persistence.Id');
 
-        this.fs.copyTpl(this.templatePath('Repository.java'),
-            this.destinationPath(`src/main/java/${this.domainClass.classPackage.classParentPackageDirectory}/repository/${this.domainClass.name}Repository.java`),
+        this.fs.copyTpl(this.templatePath('Service.java'),
+            this.destinationPath(`src/main/java/${this.domainClass.classPackage.classParentPackageDirectory}/service/${this.domainClass.name}Service.java`),
             { domainClass: this.domainClass });
         //this.log(domainClass);
 

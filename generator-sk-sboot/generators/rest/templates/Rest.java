@@ -1,4 +1,4 @@
-package <%= domainClass.classPackage.classParentPackageName %>.rest;
+package <%= domainClass.classPackage.classParentPackageName %>.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
