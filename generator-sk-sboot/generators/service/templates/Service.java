@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
 
 import <%= domainClass.classPackage.classParentPackageName %>.domain.<%= domainClass.name %>;
 import <%= domainClass.classPackage.classParentPackageName %>.repository.<%= domainClass.name %>Repository;
@@ -22,16 +23,35 @@ public class <%= domainClass.name %>Service {
 		return <%= domainClass.instanceName %>Repository.findOne(id);
 	}
 
-	public void delete(<%= domainClass.idAttribute.shortType %> id) {
-		<%= domainClass.instanceName %>Repository.delete(id);
-	}
-
 	public boolean exists(<%= domainClass.idAttribute.shortType %> id) {
 		return <%= domainClass.instanceName %>Repository.exists(id);
 	}
 
-	public <S extends <%= domainClass.name %>> S save(S <%= domainClass.instanceName %>) {
+	@Transactional
+	public void delete(<%= domainClass.idAttribute.shortType %> id) {
+		<%= domainClass.instanceName %>Repository.delete(id);
+	}
+	
+	@Transactional
+	public <%= domainClass.name %> insert(<%= domainClass.name %> new<%= domainClass.name %>) {
+		<%= domainClass.name %> <%= domainClass.instanceName %> = new <%= domainClass.name %>();
+		this.updateAttributes(<%= domainClass.instanceName %>, new<%= domainClass.name %>);
 		return <%= domainClass.instanceName %>Repository.save(<%= domainClass.instanceName %>);
+	}
+	
+	@Transactional
+	public <%= domainClass.name %> update(<%= domainClass.name %> new<%= domainClass.name %>) {
+		<%= domainClass.name %> <%= domainClass.instanceName %> = <%= domainClass.instanceName %>Repository.findOne(new<%= domainClass.name %>.getId());
+		this.updateAttributes(<%= domainClass.instanceName %>, new<%= domainClass.name %>);
+		return <%= domainClass.instanceName %>Repository.save(<%= domainClass.instanceName %>);
+	}
+
+	private void updateAttributes(<%= domainClass.name %> <%= domainClass.instanceName %>, <%= domainClass.name %> new<%= domainClass.name %>) {
+		<%_ domainClass.attributes.forEach(function(attr) { -%>
+			<%_ if (attr.shortType !== 'List' && attr.name !== 'id') { -%>
+		<%= domainClass.instanceName %>.set<%= _.upperFirst(attr.name) %>(new<%= domainClass.name %>.get<%= _.upperFirst(attr.name) %>());
+			<%_ } -%>
+		<%_ }) -%>
 	}
 
 }

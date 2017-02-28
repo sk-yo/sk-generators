@@ -4,6 +4,7 @@ const _ = require('lodash');
 const dotCase = require('dot-case');
 const sk = require('sk-node-api');
 const chalk = require('chalk');
+const fs = require('fs');
 /*
  * Gerador de repository de projeto springboot.
  */
@@ -49,9 +50,11 @@ module.exports = class extends Generator {
 
         let domainClassId = sk.findAttributeWithAnnotationName(this.domainClass.attributes, 'javax.persistence.Id');
 
+        //console.log(app);
+
         this.fs.copyTpl(this.templatePath('Service.java'),
             this.destinationPath(`src/main/java/${this.domainClass.classPackage.classParentPackageDirectory}/service/${this.domainClass.name}Service.java`),
-            { domainClass: this.domainClass });
+            { domainClass: this.domainClass, _ : _ });
         //this.log(domainClass);
 
     }
