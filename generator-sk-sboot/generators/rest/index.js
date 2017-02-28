@@ -46,7 +46,9 @@ module.exports = class extends Generator {
     }
 
     writing() {
-
+        this.composeWith(require.resolve('../service'), {
+            classname: this.options.classname
+        });
         let domainClassId = sk.findAttributeWithAnnotationName(this.domainClass.attributes, 'javax.persistence.Id');
 
         this.fs.copyTpl(this.templatePath('Rest.java'),

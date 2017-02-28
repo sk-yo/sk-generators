@@ -10,6 +10,7 @@ import <%= domainClass.classPackage.classParentPackageName %>.domain.<%= domainC
 import <%= domainClass.classPackage.classParentPackageName %>.repository.<%= domainClass.name %>Repository;
 <%_ domainClass.attributes.forEach(function(attr) { -%>
 	<%_ if (attr.shortType == 'List') { %>
+import <%= domainClass.classPackage.classParentPackageName %>.domain.<%= attr.genericTypes[0] %>;
 import <%= domainClass.classPackage.classParentPackageName %>.repository.<%= _.upperFirst(attr.name.slice(0,-1)) %>Repository;	
 	<%_ } -%>
 <%_ }) -%>
