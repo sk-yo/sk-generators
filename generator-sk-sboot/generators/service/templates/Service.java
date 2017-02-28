@@ -8,12 +8,24 @@ import javax.transaction.Transactional;
 
 import <%= domainClass.classPackage.classParentPackageName %>.domain.<%= domainClass.name %>;
 import <%= domainClass.classPackage.classParentPackageName %>.repository.<%= domainClass.name %>Repository;
+<%_ domainClass.attributes.forEach(function(attr) { -%>
+	<%_ if (attr.shortType == 'List') { %>
+import <%= domainClass.classPackage.classParentPackageName %>.repository.<%= _.upperFirst(attr.name.slice(0,-1)) %>Repository;	
+	<%_ } -%>
+<%_ }) -%>
 
 @Service
 public class <%= domainClass.name %>Service {
 
 	@Autowired
 	private <%= domainClass.name %>Repository <%= domainClass.instanceName %>Repository;
+
+	<%_ domainClass.attributes.forEach(function(attr) { -%>
+		<%_ if (attr.shortType == 'List') { -%>
+	@Autowired
+	private <%= _.upperFirst(attr.name.slice(0,-1))%>Repository <%= attr.name.slice(0,-1) %>Repository;		
+		<%_ } -%>
+	<%_ }) -%>
 
 	public Page<<%= domainClass.name %>> findAll(Pageable pageable) {
 		return <%= domainClass.instanceName %>Repository.findAll(pageable);
@@ -50,6 +62,13 @@ public class <%= domainClass.name %>Service {
 		<%_ domainClass.attributes.forEach(function(attr) { -%>
 			<%_ if (attr.shortType !== 'List' && attr.name !== 'id') { -%>
 		<%= domainClass.instanceName %>.set<%= _.upperFirst(attr.name) %>(new<%= domainClass.name %>.get<%= _.upperFirst(attr.name) %>());
+			<%_ } -%>
+		<%_ }) -%>
+		<%_ domainClass.attributes.forEach(function(attr) { -%>
+			<%_ if (attr.shortType == 'List') { -%>
+				<%_ if (_.find(attr.annotations, 'javax.persistence.Cascade') == undefined) { -%>
+		new<%= domainClass.name %>.get<%= _.upperFirst(attr.name) %>().stream().forEach(<%= attr.name.slice(0,-1) %> -> foo.get<%= _.upperFirst(attr.name) %>().add(<%= attr.name.slice(0,-1) %>Repository.findOne(<%= attr.name.slice(0,-1) %>.getId())));		
+				<%_ } -%>
 			<%_ } -%>
 		<%_ }) -%>
 	}
