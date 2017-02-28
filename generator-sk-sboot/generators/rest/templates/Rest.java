@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.List;
 import <%= domainClass.classPackage.classParentPackageName %>.domain.<%= domainClass.name %>;
+<%_ domainClass.attributes.forEach(function(attr) { -%>
+	<%_ if (attr.shortType == 'List') { -%>
+import <%= domainClass.classPackage.classParentPackageName %>.domain.<%= attr.genericTypes[0] %>;     
+    <%_ } -%>
+<%_ }) -%>
 import <%= domainClass.classPackage.classParentPackageName %>.service.<%= domainClass.name %>Service;
 
 @RestController
@@ -28,6 +33,16 @@ public class <%= domainClass.name %>Rest {
 		Page<<%= domainClass.name %>> <%= domainClass.instanceName %>s = <%= domainClass.instanceName %>Service.findAll(pageable);
 		return ResponseEntity.ok(<%= domainClass.instanceName %>s);
 	}
+
+	<%_ domainClass.attributes.forEach(function(attr) { -%>
+		<%_ if (attr.shortType == 'List') { -%>
+	@RequestMapping(method = RequestMethod.GET, path = "/api/<%= domainClass.instanceName %>s/{id}/<%= attr.name %>")
+	public ResponseEntity<?> fin<%= _.upperFirst(attr.name) %>(@PathVariable("id") <%= domainClass.idAttribute.shortType %> id) {
+		List<<%= attr.genericTypes[0] %>> <%= attr.name %> = <%= domainClass.instanceName %>Service.find<%= _.upperFirst(attr.name) %>(id);
+		return ResponseEntity.ok(<%= attr.name %>);
+	}
+		<%_ } -%>
+	<%_ }) -%>
 
 	@RequestMapping(method = RequestMethod.GET, path = "/api/<%= domainClass.instanceName %>s/{id}")
 	public ResponseEntity<?> find(@PathVariable("id") <%= domainClass.idAttribute.shortType %> id) {

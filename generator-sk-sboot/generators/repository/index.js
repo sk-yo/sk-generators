@@ -51,7 +51,7 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(this.templatePath('Repository.java'),
             this.destinationPath(`src/main/java/${this.domainClass.classPackage.classParentPackageDirectory}/repository/${this.domainClass.name}Repository.java`),
-            { domainClass: this.domainClass });
+            { domainClass: this.domainClass, _: _ });
         //this.log(domainClass);
 
     }

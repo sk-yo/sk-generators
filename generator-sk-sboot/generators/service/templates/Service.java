@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-
+import java.util.List;
 import <%= domainClass.classPackage.classParentPackageName %>.domain.<%= domainClass.name %>;
 import <%= domainClass.classPackage.classParentPackageName %>.repository.<%= domainClass.name %>Repository;
 <%_ domainClass.attributes.forEach(function(attr) { -%>
@@ -30,6 +30,14 @@ public class <%= domainClass.name %>Service {
 	public Page<<%= domainClass.name %>> findAll(Pageable pageable) {
 		return <%= domainClass.instanceName %>Repository.findAll(pageable);
 	}
+
+	<%_ domainClass.attributes.forEach(function(attr) { -%>
+		<%_ if (attr.shortType == 'List') { -%>
+	public List<Bar> find<%= _.upperFirst(attr.name) %>(Long id) {
+		return <%= domainClass.instanceName %>Repository.find<%= _.upperFirst(attr.name) %>(id);
+	}		
+		<%_ } -%>
+	<%_ }) -%>
 
 	public <%= domainClass.name %> findOne(<%= domainClass.idAttribute.shortType %> id) {
 		return <%= domainClass.instanceName %>Repository.findOne(id);
