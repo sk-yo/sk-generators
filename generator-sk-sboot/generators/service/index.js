@@ -50,11 +50,13 @@ module.exports = class extends Generator {
         this.composeWith(require.resolve('../repository'), {
             classname: this.options.classname
         });
+        this.domainClass.collectionAttributes.forEach((attr) => {
+            this.composeWith(require.resolve('../repository'), {
+                classname: attr.genericTypes[0]
+             });
+        });
         let domainClassId = sk.findAttributeWithAnnotationName(this.domainClass.attributes, 'javax.persistence.Id');
        
-        //console.log(app);
-        // console.log(this.domainClass);
-
         this.fs.copyTpl(this.templatePath('Service.java'),
             this.destinationPath(`src/main/java/${this.domainClass.classPackage.classParentPackageDirectory}/service/${this.domainClass.name}Service.java`),
             { domainClass: this.domainClass, _ : _ });

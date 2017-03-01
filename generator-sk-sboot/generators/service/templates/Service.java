@@ -30,9 +30,10 @@ public class <%= domainClass.name %>Service {
 	}
 
 	<%_ domainClass.collectionAttributes.forEach(function(attr) { -%>
-	public List<Bar> find<%= _.upperFirst(attr.name) %>(Long id) {
+	public List<<%= attr.genericTypes[0] %>> find<%= _.upperFirst(attr.name) %>(Long id) {
 		return <%= domainClass.instanceName %>Repository.find<%= _.upperFirst(attr.name) %>(id);
-	}		
+	}
+
 	<%_ }) -%>
 
 	public <%= domainClass.name %> findOne(<%= domainClass.idAttribute.shortType %> id) {
@@ -64,13 +65,13 @@ public class <%= domainClass.name %>Service {
 
 	private void updateAttributes(<%= domainClass.name %> <%= domainClass.instanceName %>, <%= domainClass.name %> new<%= domainClass.name %>) {
 		<%_ domainClass.attributes.forEach(function(attr) { -%>
-			<%_ if (!attr.collectionAttribute) { -%>
-		<%= domainClass.instanceName %>.set<%= _.upperFirst(attr.name) %>(new<%= domainClass.name %>.get<%= _.upperFirst(attr.name) %>());
+			<%_ if (!attr.collectionAttribute && !attr.idAttribute) { -%>
+		<%= domainClass.instanceName %>.<%= attr.setterName %>(new<%= domainClass.name %>.<%= attr.getterName %>());
 			<%_ } -%>
 		<%_ }) -%>
 		<%_ domainClass.collectionAttributes.forEach(function(attr) { -%>
-			<%_ if (_.find(attr.annotations, (ann) => { return ann.name === 'javax.persistence.OneToMany' }) == undefined) { -%>
-		new<%= domainClass.name %>.get<%= _.upperFirst(attr.name) %>().stream().forEach(<%= attr.name.slice(0,-1) %> -> foo.get<%= _.upperFirst(attr.name) %>().add(<%= attr.name.slice(0,-1) %>Repository.findOne(<%= attr.name.slice(0,-1) %>.getId())));		
+			<%_ if ( _.find(attr.annotations, (ann) => { return ann.parameters['cascade'] == undefined }) ) { -%>
+		new<%= domainClass.name %>.<%= attr.getterName %>().stream().forEach(<%= attr.name.slice(0,-1) %> -> foo.<%= attr.getterName %>().add(<%= attr.name.slice(0,-1) %>Repository.findOne(<%= attr.name.slice(0,-1) %>.getId())));		
 			<%_ } -%>
 		<%_ }) -%>
 	}
