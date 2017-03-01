@@ -8,11 +8,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 import <%= domainClass.classPackage.classParentPackageName %>.domain.<%= domainClass.name %>;
 import <%= domainClass.classPackage.classParentPackageName %>.repository.<%= domainClass.name %>Repository;
-<%_ domainClass.attributes.forEach(function(attr) { -%>
-	<%_ if (attr.shortType == 'List') { %>
+<%_ domainClass.collectionAttributes.forEach(function(attr) { -%>
 import <%= domainClass.classPackage.classParentPackageName %>.domain.<%= attr.genericTypes[0] %>;
 import <%= domainClass.classPackage.classParentPackageName %>.repository.<%= _.upperFirst(attr.name.slice(0,-1)) %>Repository;	
-	<%_ } -%>
 <%_ }) -%>
 
 @Service
@@ -21,23 +19,20 @@ public class <%= domainClass.name %>Service {
 	@Autowired
 	private <%= domainClass.name %>Repository <%= domainClass.instanceName %>Repository;
 
-	<%_ domainClass.attributes.forEach(function(attr) { -%>
-		<%_ if (attr.shortType == 'List') { -%>
+	<%_ domainClass.collectionAttributes.forEach(function(attr) { -%>
 	@Autowired
-	private <%= _.upperFirst(attr.name.slice(0,-1))%>Repository <%= attr.name.slice(0,-1) %>Repository;		
-		<%_ } -%>
+	private <%= _.upperFirst(attr.name.slice(0,-1))%>Repository <%= attr.name.slice(0,-1) %>Repository;	
+		
 	<%_ }) -%>
 
 	public Page<<%= domainClass.name %>> findAll(Pageable pageable) {
 		return <%= domainClass.instanceName %>Repository.findAll(pageable);
 	}
 
-	<%_ domainClass.attributes.forEach(function(attr) { -%>
-		<%_ if (attr.shortType == 'List') { -%>
+	<%_ domainClass.collectionAttributes.forEach(function(attr) { -%>
 	public List<Bar> find<%= _.upperFirst(attr.name) %>(Long id) {
 		return <%= domainClass.instanceName %>Repository.find<%= _.upperFirst(attr.name) %>(id);
 	}		
-		<%_ } -%>
 	<%_ }) -%>
 
 	public <%= domainClass.name %> findOne(<%= domainClass.idAttribute.shortType %> id) {
@@ -69,15 +64,13 @@ public class <%= domainClass.name %>Service {
 
 	private void updateAttributes(<%= domainClass.name %> <%= domainClass.instanceName %>, <%= domainClass.name %> new<%= domainClass.name %>) {
 		<%_ domainClass.attributes.forEach(function(attr) { -%>
-			<%_ if (attr.shortType !== 'List' && attr.name !== 'id') { -%>
+			<%_ if (!attr.collectionAttribute) { -%>
 		<%= domainClass.instanceName %>.set<%= _.upperFirst(attr.name) %>(new<%= domainClass.name %>.get<%= _.upperFirst(attr.name) %>());
 			<%_ } -%>
 		<%_ }) -%>
-		<%_ domainClass.attributes.forEach(function(attr) { -%>
-			<%_ if (attr.shortType == 'List') { -%>
-				<%_ if (_.find(attr.annotations, 'javax.persistence.Cascade') == undefined) { -%>
+		<%_ domainClass.collectionAttributes.forEach(function(attr) { -%>
+			<%_ if (_.find(attr.annotations, (ann) => { return ann.name === 'javax.persistence.OneToMany' }) == undefined) { -%>
 		new<%= domainClass.name %>.get<%= _.upperFirst(attr.name) %>().stream().forEach(<%= attr.name.slice(0,-1) %> -> foo.get<%= _.upperFirst(attr.name) %>().add(<%= attr.name.slice(0,-1) %>Repository.findOne(<%= attr.name.slice(0,-1) %>.getId())));		
-				<%_ } -%>
 			<%_ } -%>
 		<%_ }) -%>
 	}

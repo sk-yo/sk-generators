@@ -51,7 +51,7 @@ module.exports = class extends Generator {
             classname: this.options.classname
         });
         let domainClassId = sk.findAttributeWithAnnotationName(this.domainClass.attributes, 'javax.persistence.Id');
-
+       
         //console.log(app);
         // console.log(this.domainClass);
 
