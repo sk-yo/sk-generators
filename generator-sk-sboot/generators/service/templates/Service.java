@@ -71,7 +71,7 @@ public class <%= domainClass.name %>Service {
 		<%_ }) -%>
 		<%_ domainClass.collectionAttributes.forEach(function(attr) { -%>
 			<%_ if ( _.find(attr.annotations, (ann) => { return ann.parameters['cascade'] == undefined }) ) { -%>
-		new<%= domainClass.name %>.<%= attr.getterName %>().stream().forEach(<%= attr.name.slice(0,-1) %> -> foo.<%= attr.getterName %>().add(<%= attr.name.slice(0,-1) %>Repository.findOne(<%= attr.name.slice(0,-1) %>.getId())));		
+		new<%= domainClass.name %>.<%= attr.getterName %>().stream().forEach(<%= attr.name.slice(0,-1) %> -> <%= domainClass.instanceName %>.<%= attr.getterName %>().add(<%= attr.name.slice(0,-1) %>Repository.findOne(<%= attr.name.slice(0,-1) %>.getId())));		
 			<%_ } -%>
 		<%_ }) -%>
 	}
