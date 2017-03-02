@@ -48,14 +48,14 @@ module.exports = class extends Generator {
 
     writing() {
         this.composeWith(require.resolve('../repository'), {
-            classname: this.options.classname
+            classname: this.domainClass.name
         });
         this.domainClass.collectionAttributes.forEach((attr) => {
             this.composeWith(require.resolve('../repository'), {
                 classname: attr.genericTypes[0]
              });
         });
-        let domainClassId = sk.findAttributeWithAnnotationName(this.domainClass.attributes, 'javax.persistence.Id');
+        //let domainClassId = sk.findAttributeWithAnnotationName(this.domainClass.attributes, 'javax.persistence.Id');
        
         this.fs.copyTpl(this.templatePath('Service.java'),
             this.destinationPath(`src/main/java/${this.domainClass.classPackage.classParentPackageDirectory}/service/${this.domainClass.name}Service.java`),

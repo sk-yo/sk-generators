@@ -1,6 +1,6 @@
 {
   "name": "generator-sk-sboot",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Gerador SK de artefatos SpringBoot",
   "main": "index.js",
   "scripts": {
