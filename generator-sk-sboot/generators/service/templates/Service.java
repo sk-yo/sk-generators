@@ -75,6 +75,31 @@ public class <%= domainClass.name %>Service {
 		<%= domainClass.instanceName %>.<%= attr.setterName %>(new<%= domainClass.name %>.<%= attr.getterName %>());
 			<%_ } -%>
 		<%_ }) -%>
+		<%_ domainClass.attributes.forEach(function(attr) { -%>
+			<%_ if (attr.hasMultiplicity) { -%>
+				<%_ if (attr.multiplicity === 'OneToMany' && attr.navegability === 'unidirectional' && !attr.hasCascade) { -%>
+		update<%= _.upperFirst(attr.name) %>(<%= domainClass.instanceName %>, new<%= domainClass.name %>);
+				<%_ } -%>		
+			<%_ } -%>
+		<%_ }) -%>
 	}
+
+	<%_ domainClass.attributes.forEach(function(attr) { -%>
+		<%_ if (attr.hasMultiplicity) { -%>
+			<%_ if (attr.multiplicity === 'OneToMany' && attr.navegability === 'unidirectional' && !attr.hasCascade) { -%>
+	
+	/**
+	 * Atualiza o relacionamento unidirecional OneToMany entre <%= domainClass.name %> e <%= attr.relationship.name %>
+	 *
+	 */
+	private void update<%= _.upperFirst(attr.name) %>(<%= domainClass.name %> <%= domainClass.instanceName %>, <%= domainClass.name %> new<%= domainClass.name %>) {
+		// @formatter:off
+		new<%= domainClass.name %>.<%= attr.getterName %>().stream()
+			.forEach(<%= attr.singularizedName %> ->  <%= domainClass.instanceName %>.<%= attr.getterName %>().add(<%= _.lowerFirst(attr.relationship.name) %>Repository.findOne(<%= attr.singularizedName %>.getId())));
+		// @formatter:on				
+	}
+			<%_ } -%>		
+		<%_ } -%>
+	<%_ }) -%>
 
 }
