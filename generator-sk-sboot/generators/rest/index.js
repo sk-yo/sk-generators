@@ -51,7 +51,7 @@ module.exports = class extends Generator {
         });
         //let domainClassId = sk.findAttributeWithAnnotationName(this.domainClass.attributes, 'javax.persistence.Id');
 
-        this.fs.copyTpl(this.templatePath('Rest.java'),
+        this.fs.copyTpl(this.templatePath('Rest.java.ejs'),
             this.destinationPath(`src/main/java/${this.domainClass.parentPackageDir}/rest/${this.domainClass.name}Rest.java`),
             { domainClass: this.domainClass, _: _ });
         //this.log(domainClass);
