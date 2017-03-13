@@ -1,4 +1,4 @@
-package <%= domainClass.classPackage.classParentPackageName %>.rest;
+package <%= domainClass.parentPackageName %>.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +11,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import <%= domainClass.fullyQualifiedName %>;
+<%_ domainClass.attributes.forEach(function(attr, index) { -%>
+	<%_ if (attr.isTypeList) { -%>
+import <%= domainClass.parentPackageName %>.domain.<%= attr.relationship.name %>;  
+		<%_ if (index === 0) { -%>
 import java.util.List;
-import <%= domainClass.classPackage.classParentPackageName %>.domain.<%= domainClass.name %>;
-<%_ domainClass.attributes.forEach(function(attr) { -%>
-	<%_ if (attr.shortType == 'List') { -%>
-import <%= domainClass.classPackage.classParentPackageName %>.domain.<%= attr.genericTypes[0] %>;     
+		<%_ } -%>
     <%_ } -%>
 <%_ }) -%>
-import <%= domainClass.classPackage.classParentPackageName %>.service.<%= domainClass.name %>Service;
+import <%= domainClass.parentPackageName %>.service.<%= domainClass.name %>Service;
 
 @RestController
 public class <%= domainClass.name %>Rest {
@@ -32,7 +34,7 @@ public class <%= domainClass.name %>Rest {
 	 * Endpoint para buscar todas as instâncias de <%= domainClass.name %>.
 	 *
 	 */
-	@RequestMapping(method = RequestMethod.GET, path = "/api/<%= domainClass.instanceName %>s")
+	@RequestMapping(method = RequestMethod.GET, path = "/api/<%= domainClass.pluralizedInstanceName %>")
 	public ResponseEntity<?> findAll(Pageable pageable) {
 		log.debug("[findAll] Requisição para buscar todos <%= domainClass.instanceName %>s");
 		Page<<%= domainClass.name %>> <%= domainClass.instanceName %>s = <%= domainClass.instanceName %>Service.findAll(pageable);
@@ -45,8 +47,8 @@ public class <%= domainClass.name %>Rest {
 	 * Endpoint para buscar as instâncias de <%= attr.genericTypes[0] %> em <%= domainClass.name %>.
 	 *
 	 */
-	@RequestMapping(method = RequestMethod.GET, path = "/api/<%= domainClass.instanceName %>s/{id}/<%= attr.name %>")
-	public ResponseEntity<?> find<%= _.upperFirst(attr.name) %>(@PathVariable("id") <%= domainClass.idAttribute.shortType %> id) {
+	@RequestMapping(method = RequestMethod.GET, path = "/api/<%= domainClass.pluralizedInstanceName %>/{id}/<%= attr.name %>")
+	public ResponseEntity<?> find<%= _.upperFirst(attr.name) %>(@PathVariable("id") <%= domainClass.idAttribute.type %> id) {
 		List<<%= attr.genericTypes[0] %>> <%= attr.name %> = <%= domainClass.instanceName %>Service.find<%= _.upperFirst(attr.name) %>(id);
 		return ResponseEntity.ok(<%= attr.name %>);
 	}
@@ -57,8 +59,8 @@ public class <%= domainClass.name %>Rest {
 	 * Endpoint para buscar 1 (uma) instância de <%= domainClass.name %>.
 	 *
 	 */
-	@RequestMapping(method = RequestMethod.GET, path = "/api/<%= domainClass.instanceName %>s/{id}")
-	public ResponseEntity<?> find(@PathVariable("id") <%= domainClass.idAttribute.shortType %> id) {
+	@RequestMapping(method = RequestMethod.GET, path = "/api/<%= domainClass.pluralizedInstanceName %>/{id}")
+	public ResponseEntity<?> find(@PathVariable("id") <%= domainClass.idAttribute.type %> id) {
 		log.debug("[find] Requisição para buscar <%= domainClass.instanceName %>. id={}", id);
 		boolean exists = <%= domainClass.instanceName %>Service.exists(id);
 		if (exists) {
@@ -73,8 +75,8 @@ public class <%= domainClass.name %>Rest {
 	 * Endpoint para deleção de <%= domainClass.name %>.
 	 *
 	 */
-	@RequestMapping(method = RequestMethod.DELETE, path = "/api/<%= domainClass.instanceName %>s/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") <%= domainClass.idAttribute.shortType %> id) {
+	@RequestMapping(method = RequestMethod.DELETE, path = "/api/<%= domainClass.pluralizedInstanceName %>/{id}")
+	public ResponseEntity<?> delete(@PathVariable("id") <%= domainClass.idAttribute.type %> id) {
 		log.debug("[delete] Requisição para deletar <%= domainClass.instanceName %>. id={}", id);
 		boolean exists = <%= domainClass.instanceName %>Service.exists(id);
 		if (exists) {
@@ -91,7 +93,7 @@ public class <%= domainClass.name %>Rest {
 	 * Endpoint para inserção de <%= domainClass.name %>.
 	 *
 	 */
-	@RequestMapping(method = RequestMethod.POST, path = "/api/<%= domainClass.instanceName %>s")
+	@RequestMapping(method = RequestMethod.POST, path = "/api/<%= domainClass.pluralizedInstanceName %>")
 	public ResponseEntity<?> insert(@RequestBody <%= domainClass.name %> <%= domainClass.instanceName %>) {
 		log.debug("[insert] Requisição para inserir <%= domainClass.instanceName %>...");
 		<%= domainClass.name %> inserted<%= domainClass.name %> = <%= domainClass.instanceName %>Service.insert(<%= domainClass.instanceName %>);
@@ -103,8 +105,8 @@ public class <%= domainClass.name %>Rest {
 	 * Endpoint para atualização de <%= domainClass.name %>.
 	 *
 	 */
-	@RequestMapping(method = RequestMethod.PUT, path = "/api/<%= domainClass.instanceName %>s/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") <%= domainClass.idAttribute.shortType %> id, @RequestBody <%= domainClass.name %> <%= domainClass.instanceName %>) {
+	@RequestMapping(method = RequestMethod.PUT, path = "/api/<%= domainClass.pluralizedInstanceName %>/{id}")
+	public ResponseEntity<?> update(@PathVariable("id") <%= domainClass.idAttribute.type %> id, @RequestBody <%= domainClass.name %> <%= domainClass.instanceName %>) {
 		log.debug("[update] Requisição para atualizar de <%= domainClass.instanceName %>...");
 		boolean exists = <%= domainClass.instanceName %>Service.exists(id);
 		if (exists) {
