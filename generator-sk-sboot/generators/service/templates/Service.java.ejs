@@ -83,10 +83,10 @@ public class <%= domainClass.name %>Service {
 		<%_ }) _%>
 	}
 	<%_ _.filter(domainClass.attributes, {multiplicity: 'OneToMany', navegability: 'unidirectional', hasCascade: false} ).forEach(function(attr) { -%>
-		<%- include('partials/methodDeclarationUpdateOneToManyUnidirectional.java.ejs', {domainClass: domainClass, attr: attr}) _%>
+		<%- include('partials/updateOneToManyUnidirectional.java.ejs', {domainClass: domainClass, attr: attr}) _%>
 	<%_ }) _%>
 	<%_ _.filter(domainClass.attributes, {multiplicity: 'OneToMany', navegability: 'bidirectional', hasCascade: false} ).forEach(function(attr) { -%>
-		<%- include('partials/methodDeclarationUpdateOneToManyBidirectional.java.ejs', {domainClass: domainClass, attr: attr}) _%>
+		<%- include('partials/updateOneToManyBidirectional.java.ejs', {domainClass: domainClass, attr: attr}) _%>
 	<%_ }) _%>
 
 }

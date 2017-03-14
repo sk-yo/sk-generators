@@ -3,6 +3,7 @@ const mkdirp = require('mkdirp');
 const _ = require('lodash');
 const Entities = require('sk-node-api');
 const chalk = require('chalk');
+const fs = require('fs');
 /*
  * Gerador de repository de projeto springboot.
  */
@@ -14,6 +15,10 @@ module.exports = class extends Generator {
     }
 
     initializing() {
+         if(!fs.existsSync(`${this.destinationRoot()}/pom.xml`)) {
+                this.log(chalk.red('O diretório atual não possui um arquivo pom.xml'));
+                process.exit(1);
+        }
         if(this.options.classname) {
             this.domainClass = Entities.findByName(this.options.classname);
             return;

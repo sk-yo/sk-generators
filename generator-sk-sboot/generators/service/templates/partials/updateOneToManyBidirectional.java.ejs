@@ -1,7 +1,6 @@
-
-<%_  if(attr.multiplicity === 'OneToMany'  && attr.navegability === 'bidirectional' && !attr.hasCascade) { -%>
+	
 	/**
-	 * Atualiza o relacionamento bidirecional OneToMany entre <%= domainClass.name %> e <%= attr.relationship.name %>
+	 * Atualiza o associação bidirecional OneToMany entre <%= domainClass.name %> e <%= attr.relationship.name %>
 	 * 
 	 */
 	private void update<%= _.upperFirst(attr.name) %>(<%= domainClass.name %> <%= domainClass.instanceName %>, <%= domainClass.name %> new<%= domainClass.name %>) {
@@ -13,4 +12,3 @@
 			});
 		// @formatter:on				
 	}
-<%_ } _%>
