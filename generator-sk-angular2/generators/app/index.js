@@ -41,8 +41,9 @@ module.exports = class extends Generator {
         this.fs.copyTpl(this.templatePath('src/index.html'),this.destinationPath('src/index.html'), templateOptions);
         this.fs.copy(this.templatePath('src/main.ts'), this.destinationPath('src/main.ts'));
         this.fs.copy(this.templatePath('src/polyfills.ts'), this.destinationPath('src/polyfills.ts'));
-        this.fs.copy(this.templatePath('src/styles.css'), this.destinationPath('src/styles.css'));
+        this.fs.copy(this.templatePath('src/styles.scss'), this.destinationPath('src/styles.scss'));
         this.fs.copy(this.templatePath('src/test.ts'), this.destinationPath('src/test.ts'));
+        this.fs.copy(this.templatePath('src/theme.scss'), this.destinationPath('src/theme.scss'));
         this.fs.copy(this.templatePath('src/tsconfig.app.json'), this.destinationPath('src/tsconfig.app.json'));
         this.fs.copy(this.templatePath('src/tsconfig.spec.json'), this.destinationPath('src/tsconfig.spec.json'));
         this.fs.copy(this.templatePath('src/typings.d.ts'), this.destinationPath('src/typings.d.ts'));
