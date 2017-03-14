@@ -12,9 +12,19 @@ module.exports = class extends Generator {
 
     writing() {
         
+        this._createDirectories();
+        this._copyCoreFiles();
+        this._copyEnvironmentsFiles();
+        this._copyAppFiles();
+        this._copyAppViewMngtFiles();
+        this._copyAppViewSysFiles();
+        this._copyAppViewUserFiles();
+
+    }
+
+    _createDirectories() {
         mkdirp(this.options.appname);
         this.destinationRoot(this.destinationPath(this.options.appname));
-
         mkdirp('src/app/component');
         mkdirp('src/app/directive');
         mkdirp('src/app/domain');
@@ -23,52 +33,51 @@ module.exports = class extends Generator {
         mkdirp('src/app/view/mngt');
         mkdirp('src/app/view/sys');
         mkdirp('src/app/view/user');
+    }
 
-        //copy src/app/app.module.ts
-        this.fs.copy(this.templatePath('src/app/app.module.ts'), this.destinationPath('src/app/app.module.ts'));
-
-         //copy src/environments/*
-        this.fs.copy(this.templatePath('src/environments/**'), this.destinationPath('src/environments'));
-
+    _copyCoreFiles() {
+        let templateOptions = {appname: this.options.appname};
         this.fs.copy(this.templatePath('src/favicon.ico'), this.destinationPath('src/favicon.ico'));
-
-        this.fs.copyTpl(this.templatePath('src/index.html'),this.destinationPath('src/index.html'),
-            {appname: this.options.appname}
-        );
-
+        this.fs.copyTpl(this.templatePath('src/index.html'),this.destinationPath('src/index.html'), templateOptions);
         this.fs.copy(this.templatePath('src/main.ts'), this.destinationPath('src/main.ts'));
-
         this.fs.copy(this.templatePath('src/polyfills.ts'), this.destinationPath('src/polyfills.ts'));
-
-        this.fs.copy(this.templatePath('src/styles.css'), this.destinationPath('src/style.css'));
-
+        this.fs.copy(this.templatePath('src/styles.css'), this.destinationPath('src/styles.css'));
         this.fs.copy(this.templatePath('src/test.ts'), this.destinationPath('src/test.ts'));
-
-        this.fs.copy(this.templatePath('src/tsconfig.json'), this.destinationPath('src/tsconfig.json'));
-
+        this.fs.copy(this.templatePath('src/tsconfig.app.json'), this.destinationPath('src/tsconfig.app.json'));
+        this.fs.copy(this.templatePath('src/tsconfig.spec.json'), this.destinationPath('src/tsconfig.spec.json'));
         this.fs.copy(this.templatePath('src/typings.d.ts'), this.destinationPath('src/typings.d.ts'));
-
-        //copy .gitignore
+        this.fs.copyTpl(this.templatePath('angular-cli.json'),this.destinationPath('angular-cli.json'),templateOptions);
         this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
-
-        //copy angular-cli.json
-         this.fs.copyTpl(this.templatePath('angular-cli.json'),this.destinationPath('angular-cli.json'),
-            {appname: this.options.appname}
-        );
-        
-        //copy karma.config.js
         this.fs.copy(this.templatePath('karma.conf.js'), this.destinationPath('karma.conf.js'));
-        
-        //copy package.json
-        this.fs.copyTpl(this.templatePath('package.json'), this.destinationPath('package.json'),
-            {appname: this.options.appname}
-        );
-
-        //copy protactor.conf.js
+        this.fs.copyTpl(this.templatePath('package.json'), this.destinationPath('package.json'), templateOptions);
         this.fs.copy(this.templatePath('protractor.conf.js'), this.destinationPath('protractor.conf.js'));
-
-        //copy tslint.json
+        this.fs.copy(this.templatePath('tsconfig.json'), this.destinationPath('tsconfig.json'));
         this.fs.copy(this.templatePath('tslint.json'), this.destinationPath('tslint.json'));
+    }
+
+    _copyEnvironmentsFiles() {
+        this.fs.copy(this.templatePath('src/environments/**'), this.destinationPath('src/environments'));
+    }
+
+    _copyAppFiles() {
+        this.fs.copy(this.templatePath('src/app/app-routing.module.ts'), this.destinationPath('src/app/app-routing.module.ts'));
+        this.fs.copy(this.templatePath('src/app/app.component.css'), this.destinationPath('src/app/app.component.css'));
+        this.fs.copy(this.templatePath('src/app/app.component.html'), this.destinationPath('src/app/app.component.html'));
+        this.fs.copy(this.templatePath('src/app/app.component.spec.ts'), this.destinationPath('src/app/app.component.spec.ts'));
+        this.fs.copy(this.templatePath('src/app/app.component.ts'), this.destinationPath('src/app/app.component.ts'));
+        this.fs.copy(this.templatePath('src/app/app.module.ts'), this.destinationPath('src/app/app.module.ts'));
+    }
+
+    _copyAppViewMngtFiles() {
+        this.fs.copy(this.templatePath('src/app/view/mngt/**'), this.destinationPath('src/app/view/mngt'));
+    }
+
+    _copyAppViewSysFiles() {
+        this.fs.copy(this.templatePath('src/app/view/sys/**'), this.destinationPath('src/app/view/sys'));
+    }
+
+    _copyAppViewUserFiles() {
+         this.fs.copy(this.templatePath('src/app/view/user/**'), this.destinationPath('src/app/view/user'));
     }
 
 };

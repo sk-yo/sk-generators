@@ -25,7 +25,8 @@ import { UserModule } from './view/user/user.module';
     CovalentLayoutModule.forRoot(),
     MngtModule.forRoot(),
     SysModule.forRoot(),
-    UserModule.forRoot()
+    UserModule.forRoot(),
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
