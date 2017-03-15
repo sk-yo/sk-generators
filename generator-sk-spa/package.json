@@ -1,0 +1,30 @@
+{
+  "name": "generator-sk-spa",
+  "version": "0.0.1",
+  "description": "Gerador SK de artefatos SpringBoot e Angular2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yeoman-generator",
+    "sk",
+    "springboot",
+    "sk-spa",
+    "angular2"
+  ],
+  "author": "jcruz",
+  "license": "ISC",
+  "files": [
+    "generators"
+  ],
+  "dependencies": {
+    "@angular-cli/ast-tools": "^1.0.16",
+    "chalk": "^1.1.3",
+    "dot-case": "^2.1.0",
+    "sk-node-api": "1.1.7",
+    "yeoman-generator": "^1.0.0",
+    "generator-sk-sboot": "^1.1.3",
+    "generator-sk-angular2": "^1.0.2"
+  }
+}
