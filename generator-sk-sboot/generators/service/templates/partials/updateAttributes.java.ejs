@@ -1,0 +1,13 @@
+private void updateAttributes(<%= domainClass.name %> <%= domainClass.instanceName %>, <%= domainClass.name %> new<%= domainClass.name %>) {
+		<%_ domainClass.attributes.forEach(function(attr) { -%>
+			<%_ if (!attr.hasMultiplicity && !attr.isId && !attr.isStatic) { -%>
+		<%= domainClass.instanceName %>.<%= attr.setterName %>(new<%= domainClass.name %>.<%= attr.getterName %>());
+			<%_ } -%>
+		<%_ }) -%>
+		<%_ _.filter(domainClass.attributes, {multiplicity: 'OneToMany', navegability: 'unidirectional', hasCascade: false} ).forEach(function(attr) { _%>
+		update<%= _.upperFirst(attr.name) %>(<%= domainClass.instanceName %>, new<%= domainClass.name %>);	
+		<%_ }) _%>
+		<%_ _.filter(domainClass.attributes, {multiplicity: 'OneToMany', navegability: 'bidirectional', hasCascade: false} ).forEach(function(attr) { _%>
+		update<%= _.upperFirst(attr.name) %>(<%= domainClass.instanceName %>, new<%= domainClass.name %>);	
+		<%_ }) _%>
+	}

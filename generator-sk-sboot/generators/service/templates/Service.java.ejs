@@ -30,31 +30,65 @@ public class <%= domainClass.name %>Service {
 		 <%_ } -%>
 	<%_ }) -%>
 
+	
+	/**
+	 * Retorna uma lista de  <%= domainClass.name %> com paginação. 
+	 *
+	 * @param pageable 
+	 * @return 
+	 */
 	public Page<<%= domainClass.name %>> findAll(Pageable pageable) {
 		return <%= domainClass.instanceName %>Repository.findAll(pageable);
 	}
 
 	<%_ domainClass.attributes.forEach(function(attr) { -%>
 		<%_ if (attr.isTypeList) { -%>
-	public List<<%= attr.relationship.name %>> find<%= _.upperFirst(attr.name) %>(Long id) {
+	/**
+	 * Retorna um lista de <%= attr.relationship.name %>.
+	 *
+	 * @param id Id de <%= domainClass.name %>.
+	 * @return
+	 */
+	public List<<%= attr.relationship.name %>> find<%= _.upperFirst(attr.name) %>(<%= domainClass.idAttribute.type %> id) {
 		return <%= domainClass.instanceName %>Repository.find<%= _.upperFirst(attr.name) %>(id);
 	}
 		 <%_ } -%>
 	<%_ }) -%>
 
+	/**
+	 * Retorna uma instância de  <%= domainClass.name %> pelo id. 
+	 *
+	 */
 	public <%= domainClass.name %> findOne(<%= domainClass.idAttribute.type %> id) {
 		return <%= domainClass.instanceName %>Repository.findOne(id);
 	}
 
+	/**
+	 * Verifica se a instância de <%= domainClass.name %> existe na base de dados.
+	 *
+	 * @param id Id de <%= domainClass.name %>.
+	 * @return
+	 */
 	public boolean exists(<%= domainClass.idAttribute.type %> id) {
 		return <%= domainClass.instanceName %>Repository.exists(id);
 	}
 
+	/**
+	 * Deleta uma instância de <%= domainClass.name %>.
+	 * 
+	 * @param id Id do objeto a ser deletado.
+	 */
 	@Transactional
 	public void delete(<%= domainClass.idAttribute.type %> id) {
 		<%= domainClass.instanceName %>Repository.delete(id);
 	}
 	
+	/**
+	 * Insere uma instância de <%= domainClass.name %> na base de dados. 
+	 *
+	 * @param newFoo Objeto com os dados para inserção de <%= domainClass.name %>.
+	 * @return <%= domainClass.name %> atualizado.
+	 */
 	@Transactional
 	public <%= domainClass.name %> insert(<%= domainClass.name %> new<%= domainClass.name %>) {
 		<%= domainClass.name %> <%= domainClass.instanceName %> = new <%= domainClass.name %>();
@@ -62,6 +96,12 @@ public class <%= domainClass.name %>Service {
 		return <%= domainClass.instanceName %>Repository.save(<%= domainClass.instanceName %>);
 	}
 	
+	/**
+	 * Atualiza a instância de <%= domainClass.name %> na base de dados. 
+	 *
+	 * @param newFoo Objeto com os dados para atualização de <%= domainClass.name %>.
+	 * @return <%= domainClass.name %> atualizado.
+	 */
 	@Transactional
 	public <%= domainClass.name %> update(<%= domainClass.name %> new<%= domainClass.name %>) {
 		<%= domainClass.name %> <%= domainClass.instanceName %> = <%= domainClass.instanceName %>Repository.findOne(new<%= domainClass.name %>.getId());
@@ -69,19 +109,8 @@ public class <%= domainClass.name %>Service {
 		return <%= domainClass.instanceName %>Repository.save(<%= domainClass.instanceName %>);
 	}
 
-	private void updateAttributes(<%= domainClass.name %> <%= domainClass.instanceName %>, <%= domainClass.name %> new<%= domainClass.name %>) {
-		<%_ domainClass.attributes.forEach(function(attr) { -%>
-			<%_ if (!attr.hasMultiplicity && !attr.isId && !attr.isStatic) { -%>
-		<%= domainClass.instanceName %>.<%= attr.setterName %>(new<%= domainClass.name %>.<%= attr.getterName %>());
-			<%_ } -%>
-		<%_ }) -%>
-		<%_ _.filter(domainClass.attributes, {multiplicity: 'OneToMany', navegability: 'unidirectional', hasCascade: false} ).forEach(function(attr) { _%>
-		update<%= _.upperFirst(attr.name) %>(<%= domainClass.instanceName %>, new<%= domainClass.name %>);	
-		<%_ }) _%>
-		<%_ _.filter(domainClass.attributes, {multiplicity: 'OneToMany', navegability: 'bidirectional', hasCascade: false} ).forEach(function(attr) { _%>
-		update<%= _.upperFirst(attr.name) %>(<%= domainClass.instanceName %>, new<%= domainClass.name %>);	
-		<%_ }) _%>
-	}
+	<%- include('partials/updateAttributes.java.ejs', {domainClass: domainClass }) _%>
+
 	<%_ _.filter(domainClass.attributes, {multiplicity: 'OneToMany', navegability: 'unidirectional', hasCascade: false} ).forEach(function(attr) { -%>
 		<%- include('partials/updateOneToManyUnidirectional.java.ejs', {domainClass: domainClass, attr: attr}) _%>
 	<%_ }) _%>
