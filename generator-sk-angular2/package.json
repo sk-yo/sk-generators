@@ -1,6 +1,6 @@
 {
   "name": "generator-sk-angular2",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Gerador SK de artefatos Angular 2",
   "main": "index.js",
   "scripts": {
