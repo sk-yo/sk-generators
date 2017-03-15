@@ -36,7 +36,8 @@
     "rxjs": "^5.1.0",
     "showdown": "1.6.0",
     "zone.js": "^0.7.6",
-    "d3": "^4.6.0"
+    "d3": "^4.6.0",
+    "roboto-fontface": "^0.7.0"
   },
   "devDependencies": {
     "@angular/cli": "1.0.0-rc.1",
