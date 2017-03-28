@@ -23,10 +23,9 @@ module.exports = class extends Generator {
         let packageDir = _.split(groupId, '.').join('/');
         let appClassName = _.upperFirst(_.camelCase(this.options.appname));
 
-        mkdirp(this.options.appname);
-        this.log(`${chalk.green('   create')} ${this.options.appname}`);
-        this.destinationRoot(this.destinationPath(this.options.appname));
-
+        // mkdirp(this.options.appname);
+        //this.destinationRoot(this.destinationPath(this.options.appname));
+        this._changeDefaultDestinationRoot();
 
         mkdirp(`src/main/java/${packageDir}/domain`);
         this.log(`${chalk.green('   create')} src/main/java/${packageDir}/domain`);
@@ -63,5 +62,18 @@ module.exports = class extends Generator {
         this.fs.copyTpl(this.templatePath('src/main/java/Application.java'), this.destinationPath(`src/main/java/${packageDir}/${appClassName}Application.java`),
             { appname: this.options.appname, groupId: groupId, appClassName: appClassName, packageName: packageName }
         );
+
+        this._restoreDefaultDestinationRoot();
+    }
+
+      _changeDefaultDestinationRoot() {
+        this.defaultDestinationRoot = this.destinationRoot();
+        mkdirp(this.options.appname);
+        this.log(`${chalk.green('   create')} ${this.options.appname}`);
+        this.destinationRoot(this.destinationPath(this.options.appname));
+    }
+
+    _restoreDefaultDestinationRoot() {
+        this.destinationRoot(this.defaultDestinationRoot);
     }
 }
