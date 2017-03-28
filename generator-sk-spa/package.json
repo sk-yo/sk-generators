@@ -1,6 +1,6 @@
 {
   "name": "generator-sk-spa",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Gerador SK de artefatos SpringBoot e Angular2",
   "main": "index.js",
   "scripts": {
