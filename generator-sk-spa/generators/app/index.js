@@ -15,15 +15,30 @@ module.exports = class extends Generator {
     }
 
     writing() {
-        _generateSKsbootApp();
-        _generateSKangular2App();
+
+        this.appRootName = `${this.options.appname}-app`;
+        //this.appRootPath = this.destinationRoot(this.destinationPath(this.appRootName));
+
+        mkdirp(this.appRootName);
+        this.destinationRoot(this.destinationPath(this.appRootName));
+
+        this._generateSKsbootApp();
+        this._generateSKangular2App();
     }
 
     _generateSKsbootApp() {
-
+        this.composeWith(require.resolve('generator-sk-sboot/generators/app'), {
+            arguments: [
+                `${this.options.appname}-rs`
+            ]
+        });
     }
 
     _generateSKangular2App() {
-
+        this.composeWith(require.resolve('generator-sk-angular2/generators/app'), {
+            arguments: [
+                `${this.options.appname}`
+            ]
+        });
     }
 }
