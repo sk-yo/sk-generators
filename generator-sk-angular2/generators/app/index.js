@@ -7,11 +7,12 @@ module.exports = class extends Generator {
     constructor(args, opts) {
         super(args, opts);
         // Argumento opcional com o nome da aplicação.
-        this.argument('appname', {type: String, desc: 'Nome da aplicação.'});
+        this.argument('appname', { type: String, desc: 'Nome da aplicação.' });
     }
 
     writing() {
         
+        this._changeDefaultDestinationRoot();
         this._createDirectories();
         this._copyCoreFiles();
         this._copyEnvironmentsFiles();
@@ -19,12 +20,20 @@ module.exports = class extends Generator {
         this._copyAppViewMngtFiles();
         this._copyAppViewSysFiles();
         this._copyAppViewUserFiles();
+        this._restoreDefaultDestinationRoot();
+    }
 
+    _changeDefaultDestinationRoot() {
+        this.defaultDestinationRoot = this.destinationRoot();
+        mkdirp(this.options.appname);
+        this.destinationRoot(this.destinationPath(this.options.appname));
+    }
+
+    _restoreDefaultDestinationRoot() {
+        this.destinationRoot(this.defaultDestinationRoot);
     }
 
     _createDirectories() {
-        mkdirp(this.options.appname);
-        this.destinationRoot(this.destinationPath(this.options.appname));
         mkdirp('src/app/component');
         mkdirp('src/app/directive');
         mkdirp('src/app/domain');
@@ -36,9 +45,9 @@ module.exports = class extends Generator {
     }
 
     _copyCoreFiles() {
-        let templateOptions = {appname: this.options.appname};
+        let templateOptions = { appname: this.options.appname };
         this.fs.copy(this.templatePath('src/favicon.ico'), this.destinationPath('src/favicon.ico'));
-        this.fs.copyTpl(this.templatePath('src/index.html'),this.destinationPath('src/index.html'), templateOptions);
+        this.fs.copyTpl(this.templatePath('src/index.html'), this.destinationPath('src/index.html'), templateOptions);
         this.fs.copy(this.templatePath('src/main.ts'), this.destinationPath('src/main.ts'));
         this.fs.copy(this.templatePath('src/polyfills.ts'), this.destinationPath('src/polyfills.ts'));
         this.fs.copy(this.templatePath('src/styles.scss'), this.destinationPath('src/styles.scss'));
@@ -47,7 +56,7 @@ module.exports = class extends Generator {
         this.fs.copy(this.templatePath('src/tsconfig.app.json'), this.destinationPath('src/tsconfig.app.json'));
         this.fs.copy(this.templatePath('src/tsconfig.spec.json'), this.destinationPath('src/tsconfig.spec.json'));
         this.fs.copy(this.templatePath('src/typings.d.ts'), this.destinationPath('src/typings.d.ts'));
-        this.fs.copyTpl(this.templatePath('angular-cli.json'),this.destinationPath('angular-cli.json'),templateOptions);
+        this.fs.copyTpl(this.templatePath('angular-cli.json'), this.destinationPath('angular-cli.json'), templateOptions);
         this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
         this.fs.copy(this.templatePath('karma.conf.js'), this.destinationPath('karma.conf.js'));
         this.fs.copyTpl(this.templatePath('package.json'), this.destinationPath('package.json'), templateOptions);
@@ -78,7 +87,7 @@ module.exports = class extends Generator {
     }
 
     _copyAppViewUserFiles() {
-         this.fs.copy(this.templatePath('src/app/view/user/**'), this.destinationPath('src/app/view/user'));
+        this.fs.copy(this.templatePath('src/app/view/user/**'), this.destinationPath('src/app/view/user'));
     }
 
 };
