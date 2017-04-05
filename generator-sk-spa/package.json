@@ -1,6 +1,6 @@
 {
   "name": "generator-sk-spa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gerador SK de artefatos SpringBoot e Angular2",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,6 @@
     "sk-node-api": "1.1.7",
     "yeoman-generator": "^1.0.0",
     "generator-sk-sboot": "^1.1.4",
-    "generator-sk-angular2": "^1.0.3"
+    "generator-sk-angular2": "^1.0.4"
   }
 }
