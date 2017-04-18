@@ -16,57 +16,54 @@ module.exports = class extends Generator {
 
     }
 
+    prompting() {
+        var questions = [
+            {
+                type: 'checkbox',
+                name: 'sbootAppOpts',
+                message: 'Selecione as opções da Aplicação SpringBoot',
+                choices: ['JPA', 'Keycloak']
+            }
+        ];
+    }
+
     writing() {
 
         let groupId = `br.jus.tre_pa.${dotCase(this.options.appname)}`;
         let packageName = groupId;
         let packageDir = _.split(groupId, '.').join('/');
         let appClassName = _.upperFirst(_.camelCase(this.options.appname));
+        let tplOpts = {
+            appname: this.options.appname,
+            groupId: groupId,
+            appClassName: appClassName,
+            packageName: packageName,
+            keycloak: this.options.keycloak,
+            jpa: this.options.jpa
+        }
 
-        // mkdirp(this.options.appname);
-        //this.destinationRoot(this.destinationPath(this.options.appname));
         this._changeDefaultDestinationRoot();
 
-        mkdirp(`src/main/java/${packageDir}/domain`);
-        this.log(`${chalk.green('   create')} src/main/java/${packageDir}/domain`);
+        this._mkdir(`src/main/java/${packageDir}/domain`);
+        this._mkdir(`src/main/java/${packageDir}/exception`);
+        this._mkdir(`src/main/java/${packageDir}/repository`);
+        this._mkdir(`src/main/java/${packageDir}/service`);
+        this._mkdir(`src/main/java/${packageDir}/rest`);
 
-        mkdirp(`src/main/java/${packageDir}/exception`);
-        this.log(`${chalk.green('   create')} src/main/java/${packageDir}/exception`);
+        this.fs.copyTpl(this.templatePath('src/main/resources/application**'), this.destinationPath('src/main/resources/'), tplOpts);
 
-        mkdirp(`src/main/java/${packageDir}/repository`);
-        this.log(`${chalk.green('   create')} src/main/java/${packageDir}/repository`);
+        this._mkdir(`src/main/test/${packageDir}/service`);
+        this._mkdir(`src/main/test/${packageDir}/rest`);
 
-        mkdirp(`src/main/java/${packageDir}/service`);
-        this.log(`${chalk.green('   create')} src/main/java/${packageDir}/service`);
-
-        mkdirp(`src/main/java/${packageDir}/rest`);
-        this.log(`${chalk.green('   create')} src/main/java/${packageDir}/rest`);
-
-        this.fs.copyTpl(this.templatePath('src/main/resources/application**'), this.destinationPath('src/main/resources/'),
-            {  appname: this.options.appname, keycloak: this.options.keycloak, jpa: this.options.jpa }
-        );
-
-        mkdirp(`src/main/test/${packageDir}/service`);
-        this.log(`${chalk.green('   create')} src/main/test/${packageDir}/service`);
-
-        mkdirp(`src/main/test/${packageDir}/rest`);
-        this.log(`${chalk.green('   create')} src/main/test/${packageDir}/rest`);
-
-        this.fs.copyTpl(this.templatePath('pom.xml'), this.destinationPath('pom.xml'),
-            { appname: this.options.appname, groupId: groupId, keycloak: this.options.keycloak, jpa: this.options.jpa }
-        );
-
+        this.fs.copyTpl(this.templatePath('pom.xml'), this.destinationPath('pom.xml'), tplOpts);
         this.fs.copy(this.templatePath('mvnw'), this.destinationPath('mvnw'));
         this.fs.copy(this.templatePath('mvnw.cmd'), this.destinationPath('mvnw.cmd'));
-
-        this.fs.copyTpl(this.templatePath('src/main/java/Application.java'), this.destinationPath(`src/main/java/${packageDir}/${appClassName}Application.java`),
-            { appname: this.options.appname, groupId: groupId, appClassName: appClassName, packageName: packageName }
-        );
+        this.fs.copyTpl(this.templatePath('src/main/java/Application.java'), this.destinationPath(`src/main/java/${packageDir}/${appClassName}Application.java`), tplOpts);
 
         this._restoreDefaultDestinationRoot();
     }
 
-      _changeDefaultDestinationRoot() {
+    _changeDefaultDestinationRoot() {
         this.defaultDestinationRoot = this.destinationRoot();
         mkdirp(this.options.appname);
         this.log(`${chalk.green('   create')} ${this.options.appname}`);
@@ -75,5 +72,10 @@ module.exports = class extends Generator {
 
     _restoreDefaultDestinationRoot() {
         this.destinationRoot(this.defaultDestinationRoot);
+    }
+
+    _mkdir(dir) {
+        mkdirp(dir);
+        this.log(`${chalk.green('   create')} ${dir}`);
     }
 }
