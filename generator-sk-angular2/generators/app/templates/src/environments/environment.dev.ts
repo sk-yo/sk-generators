@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  urlbase: "http://localhost:8080/aelismaps/api"
+  urlbase: "http://10.13.16.202:8080/<%= appname %>/api"
 };
