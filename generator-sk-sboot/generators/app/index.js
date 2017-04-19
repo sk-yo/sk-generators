@@ -13,6 +13,12 @@ module.exports = class extends Generator {
         this.argument('appname', { type: String, desc: 'Nome da aplicação.' });
         this.option('keycloak');
         this.option('jpa');
+        this.userOptions = {
+            sbootAppOpts: {
+                keycloak: false,
+                jpa: false
+            }
+        };
 
     }
 
@@ -22,9 +28,17 @@ module.exports = class extends Generator {
                 type: 'checkbox',
                 name: 'sbootAppOpts',
                 message: 'Selecione as opções da Aplicação SpringBoot',
-                choices: ['JPA', 'Keycloak']
+                choices: ['JPA', 'Keycloak'],
+                when: this._hasOptions()
             }
         ];
+
+        return this.prompt(questions).then((answers) => {
+            if (answers.sbootAppOpts) {
+                this.userOptions.sbootAppOpts['keycloak'] = answers.sbootAppOpts.indexOf('Keycloak') !== -1;
+                this.userOptions.sbootAppOpts['jpa'] = answers.sbootAppOpts.indexOf('JPA') !== -1;
+            }
+        });
     }
 
     writing() {
@@ -38,8 +52,8 @@ module.exports = class extends Generator {
             groupId: groupId,
             appClassName: appClassName,
             packageName: packageName,
-            keycloak: this.options.keycloak,
-            jpa: this.options.jpa
+            keycloak: this.userOptions.sbootAppOpts['keycloak'] || this.options.keycloak,
+            jpa: this.userOptions.sbootAppOpts['jpa'] || this.options.jpa
         }
 
         this._changeDefaultDestinationRoot();
@@ -77,5 +91,9 @@ module.exports = class extends Generator {
     _mkdir(dir) {
         mkdirp(dir);
         this.log(`${chalk.green('   create')} ${dir}`);
+    }
+
+    _hasOptions() {
+        return this.options.keycloak == undefined && this.options.jpa == undefined;
     }
 }
