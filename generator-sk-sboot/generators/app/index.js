@@ -73,6 +73,7 @@ module.exports = class extends Generator {
         this.fs.copy(this.templatePath('mvnw'), this.destinationPath('mvnw'));
         this.fs.copy(this.templatePath('mvnw.cmd'), this.destinationPath('mvnw.cmd'));
         this.fs.copyTpl(this.templatePath('src/main/java/Application.java'), this.destinationPath(`src/main/java/${packageDir}/${appClassName}Application.java`), tplOpts);
+        this.fs.copy(this.templatePath('readme.md'), this.destinationPath('README.md'));
 
         this._restoreDefaultDestinationRoot();
     }
