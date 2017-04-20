@@ -29,7 +29,7 @@ module.exports = class extends Generator {
     _generateSKsbootApp() {
         this.composeWith(require.resolve('generator-sk-sboot/generators/app'), {
             arguments: [
-                `${this.options.appname}-rs`
+                `${this.options.appname}-api`
             ]
         });
     }
