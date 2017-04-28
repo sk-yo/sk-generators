@@ -34,9 +34,7 @@ module.exports = class MainQuestionClass extends Question {
             let createProject = new CreateProjectClass(this.gen, this.options);
             return createProject.promptQuestions();
         }
-
         return this.prompt();
-
     }
 
 }

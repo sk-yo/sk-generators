@@ -1,5 +1,4 @@
-var inquirer = require('inquirer');
-var Question = require('../../@questions/question');
+const Question = require('../../@questions/question');
 
 module.exports = class SpringBootCreateProjectClass extends Question {
     constructor(gen, options) {
@@ -7,7 +6,7 @@ module.exports = class SpringBootCreateProjectClass extends Question {
         this.questions.push({
             type: 'input',
             name: 'projectName',
-            message: 'Digite o nome do projeto'
+            message: 'Digite o nome do projeto:'
         });
         this.questions.push({
             type: "checkbox",

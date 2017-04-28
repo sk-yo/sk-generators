@@ -1,6 +1,6 @@
-var inquirer = require('inquirer');
 const SpringBootCreateProjectClass = require('../create-project/springboot');
-var Question = require('../../@questions/question');
+const Angular2CreateProjectClass = require('../create-project/angular2');
+const Question = require('../../@questions/question');
 
 module.exports = class CreateProjectClass extends Question {
     /**
@@ -29,6 +29,11 @@ module.exports = class CreateProjectClass extends Question {
             if (answers.createProjectChoiceItem === 'Spring Boot') {
                 let springBootCreateProject = new SpringBootCreateProjectClass(this.gen, this.options);
                 return springBootCreateProject.promptQuestions();
+            } else if (answers.createProjectChoiceItem === 'Angular 2') {
+                let angular2CreateProject = new Angular2CreateProjectClass(this.gen, this.options);
+                return angular2CreateProject.promptQuestions();
+            } else if (answers.createProjectChoiceItem === 'Spring Boot + Angular 2') {
+                
             }
         });
     }
