@@ -19,9 +19,7 @@ module.exports = class SpringBootCreateProjectClass extends Question {
      * Mostra as questions.
      */
     promptQuestions() {
-        return inquirer.prompt(this.questions).then((answers) => {
-
-        });
+        return this.prompt();
     }
 
 }

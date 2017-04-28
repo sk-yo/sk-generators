@@ -1,6 +1,7 @@
 var inquirer = require('inquirer');
+const Question = require('../../@questions/question');
 
-module.exports = class Angular2CreateProjectClass {
+module.exports = class Angular2CreateProjectClass extends Question {
     constructor(options) {
         super(options);
     }
@@ -9,8 +10,6 @@ module.exports = class Angular2CreateProjectClass {
     * Mostra as questions.
     */
     promptQuestions() {
-        return inquirer.prompt(this.questions).then((answers) => {
-
-        });
+        return this.prompt();
     }
 }

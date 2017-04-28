@@ -1,11 +1,9 @@
-var inquirer = require('inquirer')
 const CreateProjectClass = require('../@questions/create-project/index');
-var Question = require('../@questions/question');
+const Question = require('../@questions/question');
 /**
  * Classe principal de Question.
  */
 module.exports = class MainQuestionClass extends Question {
-
 
     /**
      * 
@@ -31,7 +29,7 @@ module.exports = class MainQuestionClass extends Question {
      * Mostra as questions.
      */
     promptQuestions() {
-        return inquirer.prompt(this.questions).then((answers) => {
+        return this.prompt().then((answers) => {
             if (answers.mainChoiceItem === 'Criar novo projeto') {
                 let createProject = new CreateProjectClass(this.options);
                 return createProject.promptQuestions();
