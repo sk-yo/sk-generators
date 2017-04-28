@@ -3,9 +3,11 @@ const fs = require('fs');
 var inquirer = require('inquirer');
 
 module.exports = class Question {
-    constructor(options) {
+    constructor(gen,options) {
+        this.gen = gen;
         this.options = options;
         this.questions = [];
+        this.userOptions = {};
         this.dirname = path.basename(this.options.destinationPath);
         this.appName = this.dirname.substr(0, this.dirname.indexOf('-app'));
     }
@@ -39,5 +41,9 @@ module.exports = class Question {
 
     prompt() {
         return inquirer.prompt(this.questions);
+    }
+
+    execute() {
+
     }
 }

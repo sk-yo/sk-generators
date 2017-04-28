@@ -9,21 +9,20 @@ module.exports = class MainQuestionClass extends Question {
      * 
      * @param {*} destinationPath 
      */
-    constructor(options) {
-        super(options);
-        /*
+    constructor(gen, options) {
+        super(gen, options);
+
         this.questions.push({
             type: "list",
             name: "mainChoiceItem",
             message: "O que você deseja fazer?",
             choices: [
-                "Criar novo projeto",
                 "Gerar artefato",
                 "Rodar aplicação",
                 "Realizar deploy da aplicação"
             ]
         });
-        */
+
     }
 
 
@@ -32,9 +31,12 @@ module.exports = class MainQuestionClass extends Question {
      */
     promptQuestions() {
         if (this.isNoApp()) {
-            let createProject = new CreateProjectClass(this.options);
+            let createProject = new CreateProjectClass(this.gen, this.options);
             return createProject.promptQuestions();
         }
+
+        return this.prompt();
+
     }
 
 }

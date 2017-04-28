@@ -15,7 +15,7 @@ module.exports = class extends Generator {
         let options = {
             destinationPath: this.destinationPath()
         }
-        this.mainQuestion = new MainQuestionClass(options);
+        this.mainQuestion = new MainQuestionClass(this, options);
     }
 
     prompting() {

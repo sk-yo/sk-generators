@@ -1,7 +1,7 @@
 var inquirer = require('inquirer');
 const Question = require('../../@questions/question');
 
-module.exports = class Angular2CreateProjectClass extends Question {
+module.exports = class SpaCreateProjectClass extends Question {
     constructor(gen, options) {
         super(gen, options);
     }

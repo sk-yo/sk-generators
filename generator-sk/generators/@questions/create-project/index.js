@@ -7,8 +7,8 @@ module.exports = class CreateProjectClass extends Question {
      * 
      * @param {*} destinationPath 
      */
-    constructor(options) {
-        super(options);
+    constructor(gen, options) {
+        super(gen, options);
         this.questions.push({
             type: "list",
             name: "createProjectChoiceItem",
@@ -27,7 +27,7 @@ module.exports = class CreateProjectClass extends Question {
     promptQuestions() {
         return this.prompt().then((answers) => {
             if (answers.createProjectChoiceItem === 'Spring Boot') {
-                let springBootCreateProject = new SpringBootCreateProjectClass(this.options);
+                let springBootCreateProject = new SpringBootCreateProjectClass(this.gen, this.options);
                 return springBootCreateProject.promptQuestions();
             }
         });
