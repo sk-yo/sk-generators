@@ -25,8 +25,9 @@ module.exports = class CreateProjectClass extends Question {
      * Mostra as questions.
      */
     promptQuestions() {
-        console.log(this.dirname);
-        console.log(this.appName);
+        console.log(`Is SPA? ${this.isSpaApp()}`);
+        console.log(`Is A2? ${this.isAngularApp()}`);
+        console.log(`Is Sboot? ${this.isSbootApp()}`);
         return this.prompt().then((answers) => {
             if (answers.createProjectChoiceItem === 'Spring Boot') {
                 let springBootCreateProject = new SpringBootCreateProjectClass(this.destinationPath);
