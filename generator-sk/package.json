@@ -21,7 +21,7 @@
     "dot-case": "^2.1.0",
     "sk-node-api": "1.1.7",
     "yeoman-generator": "^1.0.0",
-    "generator-sk-sboot": "^1.1.4",
+    "generator-sk-sboot": "^1.1.6",
     "generator-sk-angular2": "^1.0.4",
     "generator-sk-spa": "^1.0.1"
   }
