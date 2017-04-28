@@ -25,8 +25,9 @@ module.exports = class extends Generator {
 
     _changeDefaultDestinationRoot() {
         this.defaultDestinationRoot = this.destinationRoot();
-        mkdirp(this.options.appname);
-        this.destinationRoot(this.destinationPath(this.options.appname));
+        let basedir = this.options.appname.endsWith('-angular2') ? this.options.appname : `${this.options.appname}-angular2`;
+        mkdirp(basedir);
+        this.destinationRoot(this.destinationPath(basedir));
     }
 
     _restoreDefaultDestinationRoot() {
