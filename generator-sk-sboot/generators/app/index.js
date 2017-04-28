@@ -13,35 +13,7 @@ module.exports = class extends Generator {
         this.argument('appname', { type: String, desc: 'Nome da aplicação.' });
         this.option('keycloak');
         this.option('jpa');
-        /*
-        this.userOptions = {
-            sbootAppOpts: {
-                keycloak: false,
-                jpa: false
-            }
-        };
-        */
     }
-
-    /*
-    prompting() {
-        var questions = [
-            {
-                type: 'checkbox',
-                name: 'sbootAppOpts',
-                message: 'Selecione as opções da Aplicação SpringBoot',
-                choices: ['JPA', 'Keycloak'],
-                when: this._hasOptions()
-            }
-        ];
-
-        return this.prompt(questions).then((answers) => {
-            if (answers.sbootAppOpts) {
-                this.userOptions.sbootAppOpts['keycloak'] = answers.sbootAppOpts.indexOf('Keycloak') !== -1;
-                this.userOptions.sbootAppOpts['jpa'] = answers.sbootAppOpts.indexOf('JPA') !== -1;
-            }
-        });
-    }*/
 
     writing() {
 
@@ -49,7 +21,7 @@ module.exports = class extends Generator {
         let packageName = groupId;
         let packageDir = _.split(groupId, '.').join('/');
         let appClassName = _.upperFirst(_.camelCase(this.options.appname));
-        let tplOpts = {
+        let tplOptions = {
             appname: this.options.appname,
             groupId: groupId,
             appClassName: appClassName,
@@ -66,15 +38,15 @@ module.exports = class extends Generator {
         this._mkdir(`src/main/java/${packageDir}/service`);
         this._mkdir(`src/main/java/${packageDir}/rest`);
 
-        this.fs.copyTpl(this.templatePath('src/main/resources/application**'), this.destinationPath('src/main/resources/'), tplOpts);
+        this.fs.copyTpl(this.templatePath('src/main/resources/application**'), this.destinationPath('src/main/resources/'), tplOptions);
 
         this._mkdir(`src/main/test/${packageDir}/service`);
         this._mkdir(`src/main/test/${packageDir}/rest`);
 
-        this.fs.copyTpl(this.templatePath('pom.xml'), this.destinationPath('pom.xml'), tplOpts);
+        this.fs.copyTpl(this.templatePath('pom.xml'), this.destinationPath('pom.xml'), tplOptions);
         this.fs.copy(this.templatePath('mvnw'), this.destinationPath('mvnw'));
         this.fs.copy(this.templatePath('mvnw.cmd'), this.destinationPath('mvnw.cmd'));
-        this.fs.copyTpl(this.templatePath('src/main/java/Application.java'), this.destinationPath(`src/main/java/${packageDir}/${appClassName}Application.java`), tplOpts);
+        this.fs.copyTpl(this.templatePath('src/main/java/Application.java'), this.destinationPath(`src/main/java/${packageDir}/${appClassName}Application.java`), tplOptions);
         this.fs.copy(this.templatePath('readme.md'), this.destinationPath('README.md'));
 
         this._restoreDefaultDestinationRoot();
@@ -82,9 +54,11 @@ module.exports = class extends Generator {
 
     _changeDefaultDestinationRoot() {
         this.defaultDestinationRoot = this.destinationRoot();
-        mkdirp(this.options.appname);
-        this.log(`${chalk.green('   create')} ${this.options.appname}`);
-        this.destinationRoot(this.destinationPath(this.options.appname));
+        let basedir = this.options.appname.endsWith('-sboot') ? this.options.appname : `${this.options.appname}-sboot`;
+        this._mkdir(basedir);
+        //mkdirp(basedir);
+        //this.log(`${chalk.green('   create')} ${basedir}`);
+        this.destinationRoot(this.destinationPath(basedir));
     }
 
     _restoreDefaultDestinationRoot() {
@@ -94,9 +68,5 @@ module.exports = class extends Generator {
     _mkdir(dir) {
         mkdirp(dir);
         this.log(`${chalk.green('   create')} ${dir}`);
-    }
-
-    _hasOptions() {
-        return this.options.keycloak == undefined && this.options.jpa == undefined;
     }
 }
