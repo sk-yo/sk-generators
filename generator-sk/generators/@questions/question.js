@@ -28,9 +28,13 @@ module.exports = class Question {
      * Verifica se a aplicação é SPA (SpringBoot + Angular 2)
      */
     isSpaApp() {
-        return this.dirname.endsWith('-app') && 
+        return this.dirname.endsWith('-app') &&
             fs.existsSync(`${this.options.destinationPath}/${this.appName}-sboot/pom.xml`) &&
             fs.existsSync(`${this.options.destinationPath}/${this.appName}-angular2/package.json`);
+    }
+
+    isNoApp() {
+        return !this.isAngularApp() && !this.isSbootApp() && !this.isSpaApp();
     }
 
     prompt() {
