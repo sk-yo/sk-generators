@@ -13,15 +13,17 @@ module.exports = class extends Generator {
         this.argument('appname', { type: String, desc: 'Nome da aplicação.' });
         this.option('keycloak');
         this.option('jpa');
+        /*
         this.userOptions = {
             sbootAppOpts: {
                 keycloak: false,
                 jpa: false
             }
         };
-
+        */
     }
 
+    /*
     prompting() {
         var questions = [
             {
@@ -39,7 +41,7 @@ module.exports = class extends Generator {
                 this.userOptions.sbootAppOpts['jpa'] = answers.sbootAppOpts.indexOf('JPA') !== -1;
             }
         });
-    }
+    }*/
 
     writing() {
 
@@ -52,8 +54,8 @@ module.exports = class extends Generator {
             groupId: groupId,
             appClassName: appClassName,
             packageName: packageName,
-            keycloak: this.userOptions.sbootAppOpts['keycloak'] || this.options.keycloak,
-            jpa: this.userOptions.sbootAppOpts['jpa'] || this.options.jpa
+            keycloak: this.options.keycloak,
+            jpa: this.options.jpa
         }
 
         this._changeDefaultDestinationRoot();
