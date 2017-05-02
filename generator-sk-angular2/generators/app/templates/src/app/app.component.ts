@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { MdIconRegistry } from '@angular/material'
 import { DomSanitizer } from '@angular/platform-browser'
-import { TdDialogService, TdLoadingService, LoadingType, ILoadingOptions } from '@covalent/core';
+import { TdDialogService, TdLoadingService, LoadingType } from '@covalent/core';
 
 @Component({
     selector: 'app-root',
