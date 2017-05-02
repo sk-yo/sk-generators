@@ -1,13 +1,20 @@
 const Question = require('../../@questions/question');
 
+/**
+ * Classe responsável por criar um projeto SpringBoot.
+ */
 module.exports = class SpringBootCreateProjectClass extends Question {
     constructor(gen, options) {
         super(gen, options);
+
+        // Question de input para retornar nome do projeto
         this.questions.push({
             type: 'input',
             name: 'projectName',
             message: 'Digite o nome do projeto:'
         });
+
+        //Question com checkbox com opções de projeto SpringBoot.
         this.questions.push({
             type: "checkbox",
             name: "sbootCreateProjectChoiceItem",
@@ -20,7 +27,7 @@ module.exports = class SpringBootCreateProjectClass extends Question {
     }
 
     /**
-     * Mostra as questions.
+     * Mostra as questions do projeto SpringBoot.
      */
     promptQuestions() {
         return this.prompt().then((response) => {
@@ -31,6 +38,9 @@ module.exports = class SpringBootCreateProjectClass extends Question {
         });
     }
 
+    /**
+     * Chama o gerador 'generator-sk-sboot' para criar um projeto SpringBoot 
+     */
     execute() {
         this.gen.composeWith(require.resolve('generator-sk-sboot/generators/app'), {
             arguments: [
