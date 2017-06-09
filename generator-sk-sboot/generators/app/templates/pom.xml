@@ -26,6 +26,11 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+	<organization>
+    	<name>Tribunal Regional Eleitoral do Pará</name>
+    	<url>http://www.tre-pa.jus.br</url>
+  	</organization>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
