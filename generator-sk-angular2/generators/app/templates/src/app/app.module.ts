@@ -1,32 +1,30 @@
-import { AppRoutingModule } from './app-routing.module';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { BrowserModule, Title }  from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CovalentHighlightModule } from '@covalent/highlight';
+import { CovalentMarkdownModule } from '@covalent/markdown';
 
 import { AppComponent } from './app.component';
-import { CovalentCoreModule, CovalentLayoutModule } from '@covalent/core';
-import { MngtModule } from './view/mngt/mngt.module';
-import { SysModule } from './view/sys/sys.module';
-import { UserModule } from './view/user/user.module';
+
+
+import { SharedModule } from './shared/shared.module';
+import { CovalentMessageModule, CovalentJsonFormatterModule } from "@covalent/core";
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpModule,
-    MaterialModule.forRoot(),
-    CovalentCoreModule.forRoot(),
-    CovalentLayoutModule.forRoot(),
-    MngtModule.forRoot(),
-    SysModule.forRoot(),
-    UserModule.forRoot(),
-    AppRoutingModule
+    BrowserAnimationsModule,
+    SharedModule,
+    CovalentHighlightModule,
+    CovalentMarkdownModule,
+    CovalentMessageModule,
+    CovalentJsonFormatterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

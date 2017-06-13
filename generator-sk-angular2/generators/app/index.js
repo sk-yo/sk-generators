@@ -43,6 +43,7 @@ module.exports = class extends Generator {
         mkdirp('src/app/view/mngt');
         mkdirp('src/app/view/sys');
         mkdirp('src/app/view/user');
+        mkdirp('src/app/shared');
     }
 
     _copyCoreFiles() {
@@ -77,6 +78,7 @@ module.exports = class extends Generator {
         this.fs.copy(this.templatePath('src/app/app.component.spec.ts'), this.destinationPath('src/app/app.component.spec.ts'));
         this.fs.copy(this.templatePath('src/app/app.component.ts'), this.destinationPath('src/app/app.component.ts'));
         this.fs.copy(this.templatePath('src/app/app.module.ts'), this.destinationPath('src/app/app.module.ts'));
+        this.fs.copy(this.templatePath('src/app/shared/shared.module.ts'),this.destinationPath('src/app/shared/shared.module.ts'))
     }
 
     _copyAppViewMngtFiles() {

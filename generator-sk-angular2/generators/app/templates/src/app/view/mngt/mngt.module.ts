@@ -3,7 +3,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
-import { CovalentCoreModule, CovalentLayoutModule } from '@covalent/core';
+import { CovalentLayoutModule } from '@covalent/core';
 import { MngtDashboardComponent } from './@dashboard/mngt-dashboard.component';
 import { MngtRoutingModule } from './mngt-routing.module.';
 
@@ -15,9 +15,8 @@ import { MngtRoutingModule } from './mngt-routing.module.';
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule.forRoot(),
-    CovalentCoreModule.forRoot(),
-    CovalentLayoutModule.forRoot(),
+    MaterialModule,
+    CovalentLayoutModule,
     MngtRoutingModule
   ]
 })
