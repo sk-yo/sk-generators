@@ -4,12 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { CovalentLayoutModule } from '@covalent/core';
-import { SysDashboardComponent } from './@dashboard/sys-dashboard.component';
 import { SysRoutingModule } from './sys-routing.module.';
 
 @NgModule({
   declarations: [
-    SysDashboardComponent
+    
   ],
   imports: [
     BrowserModule,

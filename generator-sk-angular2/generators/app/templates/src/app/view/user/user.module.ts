@@ -4,12 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { CovalentLayoutModule } from '@covalent/core';
-import { UserDashboardComponent } from './@dashboard/user-dashboard.component';
 import { UserRoutingModule } from './user-routing.module.';
 
 @NgModule({
   declarations: [
-    UserDashboardComponent
+    
   ],
   imports: [
     BrowserModule,
