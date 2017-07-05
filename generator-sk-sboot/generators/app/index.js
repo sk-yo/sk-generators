@@ -38,6 +38,8 @@ module.exports = class extends Generator {
         this._mkdir(`src/main/java/${packageDir}/service`);
         this._mkdir(`src/main/java/${packageDir}/rest`);
 
+        this._mkdir(`src/main/java/${packageDir}/config`);
+
         this.fs.copyTpl(this.templatePath('src/main/resources/application**'), this.destinationPath('src/main/resources/'), tplOptions);
 
         this._mkdir(`src/main/test/${packageDir}/service`);
@@ -48,6 +50,10 @@ module.exports = class extends Generator {
         this.fs.copy(this.templatePath('mvnw.cmd'), this.destinationPath('mvnw.cmd'));
         this.fs.copyTpl(this.templatePath('src/main/java/Application.java'), this.destinationPath(`src/main/java/${packageDir}/${appClassName}Application.java`), tplOptions);
         this.fs.copy(this.templatePath('readme.md'), this.destinationPath('README.md'));
+
+
+        this.fs.copy(this.templatePath('src/main/resources/template/swagger/'),this.destinationPath('src/main/resources/template/swagger/'));
+        this.fs.copyTpl(this.templatePath('src/main/java/config/SwaggerConfig.java'),this.destinationPath(`src/main/java/${packageDir}/config/SwaggerConfig.java`), tplOptions);
 
         this._restoreDefaultDestinationRoot();
     }
