@@ -4,11 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { CovalentLayoutModule } from '@covalent/core';
-import { MngtRoutingModule } from './mngt-routing.module.';
+
+import { mgntRoutes } from './mngt-routing.module.';
+import { NavListLayoutComponent } from '../../component/layout/nav-list-layout/nav-list-layout.component'
+import { NavViewLayoutComponent } from '../../component/layout/nav-view-layout/nav-view-layout.component'
 
 @NgModule({
   declarations: [
-    
+    NavListLayoutComponent,
+    NavViewLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -16,7 +20,7 @@ import { MngtRoutingModule } from './mngt-routing.module.';
     HttpModule,
     MaterialModule,
     CovalentLayoutModule,
-    MngtRoutingModule
+    mgntRoutes
   ]
 })
 export class MngtModule {

@@ -92,5 +92,8 @@ module.exports = class extends Generator {
     _copyAppViewUserFiles() {
         this.fs.copy(this.templatePath('src/app/view/user/**'), this.destinationPath('src/app/view/user'));
     }
+    _copyAppViewUserFiles() {
+        this.fs.copy(this.templatePath('src/app/component/**'), this.destinationPath('src/app/component'));
+    }
 
 };

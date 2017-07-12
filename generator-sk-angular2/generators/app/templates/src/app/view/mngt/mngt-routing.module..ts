@@ -1,19 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
 
-const mgntRoutes: Routes = [
+const routes: Routes = [
 
 ];
 
-@NgModule({
-    imports: [
-        RouterModule.forChild(mgntRoutes)
-    ],
-    exports: [
-        RouterModule
-    ]
-})
-
-export class MngtRoutingModule { }
+export const mgntRoutes: ModuleWithProviders = RouterModule.forChild(routes);

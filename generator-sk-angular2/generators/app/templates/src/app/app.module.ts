@@ -14,7 +14,7 @@ import { CovalentMessageModule, CovalentJsonFormatterModule } from "@covalent/co
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

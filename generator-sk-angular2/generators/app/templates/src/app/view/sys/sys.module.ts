@@ -4,11 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { CovalentLayoutModule } from '@covalent/core';
-import { SysRoutingModule } from './sys-routing.module.';
+
+import { sysRoutes } from './sys-routing.module.';
+import { NavListLayoutComponent } from '../../component/layout/nav-list-layout/nav-list-layout.component'
+import { NavViewLayoutComponent } from '../../component/layout/nav-view-layout/nav-view-layout.component'
 
 @NgModule({
   declarations: [
-    
+    NavListLayoutComponent,
+    NavViewLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -16,7 +20,7 @@ import { SysRoutingModule } from './sys-routing.module.';
     HttpModule,
     MaterialModule,
     CovalentLayoutModule,
-    SysRoutingModule
+    sysRoutes
   ]
 })
 export class SysModule {

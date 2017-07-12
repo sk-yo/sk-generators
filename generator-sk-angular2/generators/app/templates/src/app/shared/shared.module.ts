@@ -6,23 +6,22 @@ import {
   CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
   CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
   CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
-  CovalentCommonModule, CovalentDialogsModule,
+  CovalentCommonModule, CovalentDialogsModule
 } from '@covalent/core';
 import {
   MdButtonModule, MdCardModule, MdIconModule,
   MdListModule, MdMenuModule, MdTooltipModule,
   MdSlideToggleModule, MdInputModule, MdCheckboxModule,
   MdToolbarModule, MdSnackBarModule, MdSidenavModule,
-  MdTabsModule, MdSelectModule, MdNativeDateModule, MdDatepickerModule,
+  MdTabsModule, MdSelectModule, MdNativeDateModule, MdDatepickerModule
 } from '@angular/material';
-import { NgxChartsModule, } from '@swimlane/ngx-charts';
 
 const FLEX_LAYOUT_MODULES: any[] = [
-  FlexLayoutModule,
+  FlexLayoutModule
 ];
 
 const ANGULAR_MODULES: any[] = [
-  FormsModule, ReactiveFormsModule,
+  FormsModule, ReactiveFormsModule
 ];
 
 const MATERIAL_MODULES: any[] = [
@@ -37,11 +36,7 @@ const COVALENT_MODULES: any[] = [
   CovalentDataTableModule, CovalentMediaModule, CovalentLoadingModule,
   CovalentNotificationsModule, CovalentLayoutModule, CovalentMenuModule,
   CovalentPagingModule, CovalentSearchModule, CovalentStepsModule,
-  CovalentCommonModule, CovalentDialogsModule,
-];
-
-const CHART_MODULES: any[] = [
-  NgxChartsModule,
+  CovalentCommonModule, CovalentDialogsModule
 ];
 
 @NgModule({
@@ -50,8 +45,7 @@ const CHART_MODULES: any[] = [
     ANGULAR_MODULES,
     MATERIAL_MODULES,
     COVALENT_MODULES,
-    CHART_MODULES,
-    FLEX_LAYOUT_MODULES,
+    FLEX_LAYOUT_MODULES
   ],
   declarations: [
 
@@ -60,8 +54,7 @@ const CHART_MODULES: any[] = [
     ANGULAR_MODULES,
     MATERIAL_MODULES,
     COVALENT_MODULES,
-    CHART_MODULES,
-    FLEX_LAYOUT_MODULES,
+    FLEX_LAYOUT_MODULES
   ]
 })
 export class SharedModule { }

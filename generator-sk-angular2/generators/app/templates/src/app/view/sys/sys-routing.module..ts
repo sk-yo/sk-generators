@@ -1,18 +1,10 @@
-import { NgModule }             from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
 
-const sysRoutes: Routes = [
+const routes: Routes = [
 
 ];
 
-@NgModule({
-    imports: [
-        RouterModule.forChild(sysRoutes)
-    ],
-    exports: [
-        RouterModule
-    ]
-})
-export class SysRoutingModule {}
+export const sysRoutes: ModuleWithProviders = RouterModule.forChild(routes);
