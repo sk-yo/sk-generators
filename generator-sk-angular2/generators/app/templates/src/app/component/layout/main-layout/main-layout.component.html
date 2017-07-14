@@ -1,5 +1,5 @@
 <td-layout #layout>
-  <td-navigation-drawer sidenavTitle="Bioponto 2" [name]="userInfo.name" [email]="userInfo.email">
+  <td-navigation-drawer sidenavTitle="<%= appname %>" [name]="userInfo.name" [email]="userInfo.email">
     <md-nav-list>
       <ng-template let-item let-last="last" ngFor [ngForOf]="routes">
         <a md-list-item [routerLink]="[item.route]" (click)="layout.close()">

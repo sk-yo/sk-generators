@@ -20,6 +20,7 @@ module.exports = class extends Generator {
         this._copyAppViewMngtFiles();
         this._copyAppViewSysFiles();
         this._copyAppViewUserFiles();
+        this. _copyAppViewComponentFiles();
         this._restoreDefaultDestinationRoot();
     }
 
@@ -92,8 +93,9 @@ module.exports = class extends Generator {
     _copyAppViewUserFiles() {
         this.fs.copy(this.templatePath('src/app/view/user/**'), this.destinationPath('src/app/view/user'));
     }
-    _copyAppViewUserFiles() {
-        this.fs.copy(this.templatePath('src/app/component/**'), this.destinationPath('src/app/component'));
+    _copyAppViewComponentFiles() {
+        let templateOptions = { appname: this.options.appname };
+        this.fs.copyTpl(this.templatePath('src/app/component/**'), this.destinationPath('src/app/component/'), templateOptions);
     }
 
 };

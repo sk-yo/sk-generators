@@ -6,6 +6,8 @@ import { CovalentHighlightModule } from '@covalent/highlight';
 import { CovalentMarkdownModule } from '@covalent/markdown';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { MainLayoutComponent } from './component/layout/main-layout/main-layout.component';
 
 
 import { SharedModule } from './shared/shared.module';
@@ -14,7 +16,8 @@ import { CovalentMessageModule, CovalentJsonFormatterModule } from "@covalent/co
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { CovalentMessageModule, CovalentJsonFormatterModule } from "@covalent/co
     CovalentHighlightModule,
     CovalentMarkdownModule,
     CovalentMessageModule,
-    CovalentJsonFormatterModule
+    CovalentJsonFormatterModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

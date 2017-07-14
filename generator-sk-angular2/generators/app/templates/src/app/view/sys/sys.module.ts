@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { CovalentLayoutModule } from '@covalent/core';
+import { SharedModule } from '../../shared/shared.module';
 
-import { sysRoutes } from './sys-routing.module.';
+import { sysRoutes } from './sys-routing.module';
 import { NavListLayoutComponent } from '../../component/layout/nav-list-layout/nav-list-layout.component'
 import { NavViewLayoutComponent } from '../../component/layout/nav-view-layout/nav-view-layout.component'
 
@@ -15,19 +16,8 @@ import { NavViewLayoutComponent } from '../../component/layout/nav-view-layout/n
     NavViewLayoutComponent
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    MaterialModule,
-    CovalentLayoutModule,
+     SharedModule,
     sysRoutes
   ]
 })
-export class SysModule {
-   static forRoot() : ModuleWithProviders {
-    return {
-      ngModule: SysModule,
-      providers: []
-    }
-  }
- }
+export class SysModule {}
