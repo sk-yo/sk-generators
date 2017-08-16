@@ -1,0 +1,15 @@
+# Arquivo /etc/systemd/system/<%= appname %>.service
+# Ex: /etc/systemd/system/aelismaps.service
+[Unit]
+# Descrição resumida do sistema
+Description=Descrição do Sistema
+
+[Service]
+User=www-data
+# Comando executado pelo 'systemctl start <%= appname %>.service'.
+ExecStart=/opt/jdk/jdk1.8.0_102/bin/java -jar /opt/apps/service/<%= appname %>.jar
+ExecStop=/bin/kill -15 $MAINPID
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

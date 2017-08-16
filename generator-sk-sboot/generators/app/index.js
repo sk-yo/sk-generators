@@ -54,6 +54,7 @@ module.exports = class extends Generator {
 
         this.fs.copy(this.templatePath('src/main/resources/template/swagger/'),this.destinationPath('src/main/resources/template/swagger/'));
         this.fs.copyTpl(this.templatePath('src/main/java/config/SwaggerConfig.java'),this.destinationPath(`src/main/java/${packageDir}/config/SwaggerConfig.java`), tplOptions);
+        this.fs.copyTpl(this.templatePath('src/main/resources/app_name.service'), this.destinationPath(`src/main/resources/${this.options.appname}.service`), tplOptions);
 
         this._restoreDefaultDestinationRoot();
     }
